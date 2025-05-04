@@ -19,3 +19,5 @@
 /bin/Debug/net8.0/appsettings.Development.json
 /bin/Debug/net8.0/appsettings.json
 /bin/Debug/net8.0/ExcelFilesCompiler.runtimeconfig.json
+/bin/Debug/net8.0/MalamaReportProcessor.exe
+/bin/Debug/net8.0/MalamaReportProcessor.pdb
