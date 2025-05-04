@@ -1,0 +1,21 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[submodule]
+	active = .
+[remote "origin"]
+	url = https://github.com/MuhammadFaizanSheikh/Malama.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "develop"]
+	remote = origin
+	merge = refs/heads/develop
+[branch "develop2.1"]
+	remote = origin
+	merge = refs/heads/develop2.1

@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+@* <h1>Welcome to the Dashboard!</h1> *@
+
+<div class="dashboard-icons">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-controller="AccountRegistration" asp-action="Register" class="icon-box">
+            <img src="/images/Admin.jpg" alt="Admin" />
+            <span>Admin</span>
+        </a>
+    }
+    @if (!ViewBag.ShowExcelUploader)
+    {
+        <a asp-controller="Home" asp-action="Index" class="icon-box">
+            <img src="/images/Report Processor.jpg" alt="Report Processor" />
+            <span>Report Processor</span>
+        </a>
+    }
+
+    @if (ViewBag.ShowExcelUploader)
+    {
+        <a asp-controller="ExcelFileUploader" asp-action="Index" class="icon-box">
+            <img src="/images/Report Processor.jpg" alt="Malama Check In Out" />
+            <span>Malama Check In Out</span>
+        </a>
+    }
+
+    @* <a class="icon-box">
+        <img src="/images/Check in Station.jpg" alt="Checkin Station" />
+        <span>Checkin Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/Vision Station.jpg" alt="Vision Station" />
+        <span>Vision Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/Vital Station.jpg" alt="Vital Station" />
+        <span>Vital Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/Audiology Station.jpg" alt="Audiology Station" />
+        <span>Audiology Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/Hearing Station.jpg" alt="Hearing Station" />
+        <span>Hearing Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/Lab Station.jpg" alt="Lab Station" />
+        <span>Lab Station</span>
+    </a>
+
+    <a class="icon-box">
+        <img src="/images/PHA Station.jpg" alt="PHA Station" />
+        <span>PHA Station</span>
+    </a>
+    <a asp-controller="EventStaff" asp-action="Index" class="icon-box">
+        <img src="/images/Event Satff Icon.jpg" alt="Event Satff" />
+        <span>Event Staff</span>
+    </a>
+
+    <a asp-controller="SubContractorInfo" asp-action="Index" class="icon-box">
+        <img src="/images/Sub-contractorInfo.jpg" alt="Sub - Contractor Info" />
+        <span>Sub - Contractor Info</span>
+    </a>
+
+    <a asp-controller="ContractDetails" asp-action="Index" class="icon-box">
+        <img src="/images/ContractDetails.jpg" alt="Contract Details" />
+        <span>Contract Details</span>
+    </a>
+
+    <a asp-controller="EventManagement" asp-action="Index" class="icon-box">
+        <img src="/images/Event Management.png" alt="Event Management" />
+        <span>Event Management</span>
+    </a> *@
+
+   
+</div>
+<style>
+.dashboard-icons {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+    .icon-box {
+        flex-basis: calc(20% - 20px); /* 20% width minus margin/padding */
+        max-width: calc(20% - 20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 120px;
+        background-color: #e6f7ff;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #333;
+        margin: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+        .icon-box:hover {
+            background-color: #d6e6f2;
+            transform: translateY(-5px);
+        }
+
+        .icon-box img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .icon-box span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+    .dashboard-icons {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+</style>

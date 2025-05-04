@@ -1,0 +1,15 @@
+0000000000000000000000000000000000000000 a64a7dce5bfc0e7ce7e960704f5983a1c729bed5 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730742912 +0500	branch: Created from main
+a64a7dce5bfc0e7ce7e960704f5983a1c729bed5 1e2cd9e932fb6d4cd391d0cf95c85bbbdd606a46 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730829924 +0500	commit: add partial handling to deactivate user
+1e2cd9e932fb6d4cd391d0cf95c85bbbdd606a46 40d72fb189e264cef91ac3e10b9a78995e0852e0 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730836995 +0500	commit: adding 2fa
+40d72fb189e264cef91ac3e10b9a78995e0852e0 0a82aa861febe70208e803c8a9344f4067dabd6d Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730838349 +0500	commit: remove open passwords
+0a82aa861febe70208e803c8a9344f4067dabd6d 0936acded92f1843f1952cbb0aed66fe04dc68f4 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730913656 +0500	pull --progress --no-edit --no-stat --recurse-submodules=no origin: Fast-forward
+0936acded92f1843f1952cbb0aed66fe04dc68f4 6b7a43dc8d14391ad3139357a20fe918dbca63c3 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1730952366 +0500	commit: added 2fa
+6b7a43dc8d14391ad3139357a20fe918dbca63c3 d32e9b42868792cd25d8e4e60324a346f64eb760 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731005827 +0500	commit: added deactivating user handling
+d32e9b42868792cd25d8e4e60324a346f64eb760 19e636cb0ac1f4539f62506ead8412d51efa55b5 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731006336 +0500	commit: added username in dashboard
+19e636cb0ac1f4539f62506ead8412d51efa55b5 79da4694cfcf51bf6d19fa74b27cb645bda98d3d Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731006891 +0500	commit: restrict inactive user to login
+79da4694cfcf51bf6d19fa74b27cb645bda98d3d 12bccbca20f8ff8fc032f5b28343458990de26d0 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731352118 +0500	commit: added forgotpassword handling
+12bccbca20f8ff8fc032f5b28343458990de26d0 b917b4273f1defeb266d75f1821cea0ac6452f70 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731509693 +0500	commit: added change password handling
+b917b4273f1defeb266d75f1821cea0ac6452f70 2fa682b6409cd6ad99649099ff3799874c632b97 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731755633 +0500	commit: remove autofill from email
+2fa682b6409cd6ad99649099ff3799874c632b97 0c45e33b524d2139991be88de9af7e0765b18c18 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1731847862 +0500	commit: resolved issues
+0c45e33b524d2139991be88de9af7e0765b18c18 bbca5eaff9cfb2090e1c091e48cb8ea102fb59c9 Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1733506295 +0500	commit: add logo
+bbca5eaff9cfb2090e1c091e48cb8ea102fb59c9 3c9cb328cb292c14bce6c836e7e8dd41f58da20d Muhammad Faizan <muhamadfaizansheikh@gmail.com> 1733681008 +0500	commit: add icons and change placement of menu from menu list to dashbard

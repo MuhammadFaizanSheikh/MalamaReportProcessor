@@ -1,0 +1,110 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+body {
+    background-color: rgba(80,90,201,0.1);
+}
+
+.form-control, .btn {
+    background-color: rgba(80,90,201,1);
+    border-color: rgba(80,90,201,1);
+    color: white;
+}
+
+select.form-control, .event-input {
+    background-color: #fff;
+    border-color: #ced4da;
+    color: black;
+}
+
+.button-container {
+    gap: 15px;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+}
+
+
+.custom-modal {
+    max-width: 800px;
+}
+
+.modal-dialog {
+    max-width: 90%;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+#editModal .form-control {
+    background-color: rgba(173, 182, 231, 1); /* Light blue */
+    border-color: rgba(80,90,201,1);
+    color: black;
+}
+
+#editModal select.form-control {
+    background-color: rgba(173, 182, 231, 1); /* Light blue for dropdowns as well */
+    border-color: rgba(80,90,201,1);
+    color: black;
+}
+
+/* Button within modal */
+#editModal .btn {
+    background-color: rgba(80,90,201,1); /* Light blue for modal buttons */
+    border-color: rgba(80,90,201,1);
+    color: black;
+}
+
+#editModal .highlight-error {
+    border: 2px solid red !important;
+    background-color: #ffe6e6 !important; /* Light red background */
+}
+
+input[readonly] {
+    background-color: #e9ecef !important;
+    cursor: not-allowed;
+}
+
+select:disabled {
+    background-color: #e9ecef !important; /* Light gray background */
+    color: #6c757d !important; /* Gray text */
+    cursor: not-allowed; /* Show "not allowed" cursor */
+    opacity: 1; /* Ensure full visibility */
+}
+
+.form-group {
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+.highlight-error {
+    border: 2px solid red;
+    background-color: #ffe6e6; /* Light red background */
+}
