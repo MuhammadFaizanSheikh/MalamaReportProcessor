@@ -7,7 +7,8 @@
     "SICKLE", "G6PD", "G6PD Date", "G6PD Status", "HIV NEXT TEST DATE", "HIV", "Lipid Needed",
     "LIPID PANEL", "Cholesterol / HDL Cholesterol", "Framingham", "EKG", "EKG NEEDED", "hcg",
     "IMM Needed", "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed", "TaskForce", "Notes", "Over 44",
-    "EventDate", "Event End Date", "EventID", "Vision_Win", "Dental_Win", "PHA_Win", "HIV_Win", "Hearing_WIN"
+    "EventDate", "Event End Date", "EventID", "Vision_Win", "Dental_Win", "PHA_Win", "HIV_Win", "Hearing_WIN", "Barcode", "Checked In", "Checked Out", "Checked In By",
+    "Checked Out By", "Checked In Time", "Checked Out Time"
 ];
 
 const tableToKeysIndexMap = [
@@ -92,7 +93,9 @@ const tableToKeysIndexMap = [
     keys.indexOf("MMR Needed"),            // MMR
     keys.indexOf("Hep A Needed"),          // Hep A
     keys.indexOf("Tet/TDP Needed"),        // Tet/TDP
-    keys.indexOf("Varicella Needed")       // Varicella
+    keys.indexOf("Varicella Needed"),       // Varicella
+    keys.indexOf("Checked In"),       // Varicella
+    keys.indexOf("Checked Out")       // Varicella
 ];
 
 
@@ -125,6 +128,9 @@ const categories = {
     ],
     "Immunization Information": [
         "IMM Needed", "Hep B Needed", "FLU Needed", "MMR Needed", "Hep A Needed", "Tet/TDP Needed", "Varicella Needed"
+    ],
+    "Check In Out Information": [
+        "Checked In", "Checked Out"
     ]
 };
 
@@ -134,6 +140,7 @@ let currentRow;
 let isAddingNewRow = false;
 
 function editRow(button) {
+    debugger;
     currentRow = $(button).closest('tr');  // Get the row clicked for editing
     const rowData = {};
 
@@ -143,7 +150,7 @@ function editRow(button) {
         rowData[key] = currentRow.find('td').eq(tableColIndex).text().trim() || '';  // Get the value from the correct table column
     });
 
-    populateModal(rowData);  // Pass the mapped data to populateModal
+    populateModalForEdit(rowData);  // Pass the mapped data to populateModal
     $('#editModal').modal('show');  // Show the modal
 }
 
@@ -222,13 +229,15 @@ const dropdownOptionsMapping = {
 
 const modalContent = $('#modalBodyContent');
 
-function populateModal(data) {
+function populateModalForEdit(data) {
     modalContent.empty(); // Clear previous content
 
     const fieldsPerRow = 5; // Set to 5 fields per row now
 
     for (const [categoryName, categoryKeys] of Object.entries(categories)) {
-        modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+        if (categoryName !== 'Check In Out Information') {
+            modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+        }
 
         let rowHtml = '<div class="row">';
         let inputCount = 0;
@@ -238,8 +247,7 @@ function populateModal(data) {
             let keyIndex = keys.indexOf(key);
             let readOnly = readOnlyIndexes.includes(keys.indexOf(key)) ? 'readonly' : '';
             let textColor = 'style="color: black;"'; // Set text color to black
-
-            if (keyIndex === 18) {
+            if (key === 'PANO Needed') {
                 if (value.trim().toLowerCase() === "n/a") {
                     inputHtml = `
             <div class="form-group col-lg-2">
@@ -258,7 +266,7 @@ function populateModal(data) {
             </div>`;
                 }
             }
-            else if (keyIndex === 48 || keyIndex === 51) {
+            else if (key === 'LIPID PANEL' || key === 'EKG') {
                 if (value.trim().toLowerCase() === "n/a") {
                     inputHtml = `
                                                     <div class="form-group col-lg-2">
@@ -275,7 +283,7 @@ function populateModal(data) {
                                                             </div>`;
                 }
             }
-            else if (keyIndex === 49) {
+            else if (key === 'Cholesterol / HDL Cholesterol') {
                 if (value.trim().toLowerCase() === "n/a") {
                     inputHtml = `<div class="form-group col-lg-2">
                                                                             <label>${key}</label>
@@ -289,7 +297,7 @@ function populateModal(data) {
                                                                                     </div>`;
                 }
             }
-            else if (keyIndex === 50) {
+            else if (key === 'Framingham') {
                 if (value.trim().toLowerCase() === "n/a") {
                     inputHtml = `<div class="form-group col-lg-2">
                                                                                         <label>${key}</label>
@@ -347,6 +355,15 @@ function populateModal(data) {
                                     </div>
                                 `;
             }
+            else if (key === 'Checked In' || key === 'Checked Out') {
+                debugger;
+                if (key === 'Checked In') {
+                    $("#checkedIn").val(value).trigger("change");
+                }
+                else if (key === 'Checked Out') {
+                    $("#checkedOut").val(value);
+                }
+            }
             // Default text field
             else {
                 inputHtml = `
@@ -387,7 +404,6 @@ function populateModal(data) {
     const dobField = modalContent.find('input[name="DOB"]');
     if (dobField.length > 0) {
         dobField.on('change', function () {
-            alert('dasda')
             debugger;
             const dobValue = $(this).val();
             if (dobValue) {
@@ -445,7 +461,9 @@ function populateModalForAdd(data) {
     const fieldsPerRow = 5; // Set to 5 fields per row now
 
     for (const [categoryName, categoryKeys] of Object.entries(categories)) {
-        modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+        if (categoryName !== 'Check In Out Information') {
+            modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+        }
 
         let rowHtml = '<div class="row">';
         let inputCount = 0;
@@ -877,12 +895,12 @@ function AdjustWidth() {
     }, 10);
 }
 
+let walkInSmCount = 0;
 function saveChangesButton() {
-    debugger;
     const modalInputs = $('#editModal').find('input, select, textarea');
     const updatedData = {};
 
-    const requiredFields = ['FULL NAME', 'FULL SSN', 'DOD ID', 'DOB'];
+    const requiredFields = ['FULL NAME', 'FULL SSN', 'DOD ID', 'DOB', 'TaskForce'];
     let hasError = false;
 
     // Clear previous highlights
@@ -910,46 +928,49 @@ function saveChangesButton() {
         return;
     }
 
-    let newRowData = new Array(73).fill('');
+    //let newRowData = new Array(79).fill('');
     const fullSsnValue = updatedData['FULL SSN'];
-    const last4Index = keys.indexOf('LAST 4'); // Find index of FULL SSN column
-
-    debugger;
-    tableToKeysIndexMap.forEach((keysIndex, tableColIndex) => {
-        if (keysIndex !== -1) {
-            const fieldName = keys[keysIndex];
-
-            // Keep original value if the field is empty
-            if (updatedData[fieldName] && updatedData[fieldName].trim() !== '') {
-                newRowData[tableColIndex] = updatedData[fieldName];
-            } else {
-                newRowData[tableColIndex] = currentRow.find('td').eq(tableColIndex).text(); // Keep original value
-            }
-        }
-    });
+    const last4Index = keys.indexOf('LAST 4');
+    const smIdIndex = keys.indexOf('SM ID');// Find index of FULL SSN column
+    const checkedInIndex = keys.indexOf('Checked In');
+    const checkedOutIndex = keys.indexOf('Checked Out');
 
     if (isAddingNewRow) {
+        // Initialize a full row with empty values
+        const fullRowData = Array(keys.length).fill('');
+
+        // set sm id counter in index 0 (for edit mode)
         smIdCounter++;
-        newRowData[0] = smIdCounter;
-    } else {
-        newRowData[0] = currentRow.find('td').eq(0).text();
+        fullRowData[smIdIndex] = smIdCounter;
 
         if (last4Index !== -1 && fullSsnValue) {
-            // const currentLast4 = currentRow.find('td').eq(last4Index).text();
             const updatedLast4 = fullSsnValue.slice(-4);
-            newRowData[last4Index] = updatedLast4;
+            fullRowData[last4Index] = updatedLast4;
         }
+
+        // Fill in only the known fields using tableToKeysIndexMap
+        tableToKeysIndexMap.forEach((keyIndex, modalIndex) => {
+            if (keyIndex !== -1) {
+                const fieldKey = keys[keyIndex];
+                fullRowData[keyIndex] = updatedData[fieldKey] || '';
+            }
+        });
+
+        fullRowData[checkedInIndex] = $('#checkedIn').val();
+        fullRowData[checkedOutIndex] = $('#checkedOut').val();
+
+        $('#previewTable').DataTable().row.add(fullRowData).draw(false);
+        walkInSmCount++;
     }
+    else {
+        if (last4Index !== -1 && fullSsnValue) {
+            const updatedLast4 = fullSsnValue.slice(-4);
+            updatedData['LAST 4'] = updatedLast4;
+        }
 
-    let actionButtons = `
-                    <button class="btn mr-2" onclick="editRow(this)">Edit</button>
-                    <button class="btn btn-danger d-none" onclick="cancelRow(this)">Cancel</button>
-                `;
-    newRowData[72] = actionButtons;
+        updatedData['Checked In'] = $('#checkedIn').val();
+        updatedData['Checked Out'] = $('#checkedOut').val();
 
-    if (isAddingNewRow) {
-        $('#previewTable').DataTable().row.add(newRowData).draw(false);
-    } else {
         keys.forEach((key, index) => {
             if (updatedData[key] !== undefined) {
                 // Keep original value if empty
@@ -958,20 +979,26 @@ function saveChangesButton() {
                 }
             }
         });
-
-        if (last4Index !== -1) {
-            currentRow.find('td').eq(last4Index).text(newRowData[last4Index]);
-        }
     }
 
     isAddingNewRow = false;
     AdjustWidth();
+
+
     $('#editModal').modal('hide');
 
-    if (window.shouldRunAfterSave) {
+    if (window.isCheckInOutPage) {
+        RenderUpdatedEventSummaryTable();
         UpdateExcelFile();
     }
 }
+
+
+
+
+
+
+
 
 
 
@@ -1150,6 +1177,8 @@ function addRow() {
     isAddingNewRow = true;
     const emptyData = {};
     populateModalForAdd(emptyData);
+    $('#checkedIn').val('No');
+    $('#checkedOut').val('No').prop('disabled', true);
     $('#editModal').modal('show');
 }
 

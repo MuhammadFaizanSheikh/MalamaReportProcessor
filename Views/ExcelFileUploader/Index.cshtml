@@ -36,12 +36,40 @@
                 <div class="col-auto">
                     <input type="file" id="excelFile" class="form-control-file" accept=".xlsx,.xls" />
                 </div>
-               @*  <div class="col-auto">
-                    <input type="text" id="filePathDisplay" class="form-control eve000000000121 48yu44u u N u40 k+nt-input" placeholder="No file selected" readonly />
+                @* <div class="col-auto">
+                <input type="text" id="filePathDisplay" class="form-control eve000000000121 48yu44u u N u40 k+nt-input" placeholder="No file selected" readonly />
                 </div> *@
             </div>
         </div>
     </div>
+
+    <table id="eventSummaryTable" class="display nowrap table table-bordered" style="display: none;">
+        <thead>
+            <tr>
+                <th>Event Summary</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total number of SM</td>
+                <td id="totalSmColumn">0</td>
+            </tr>
+            <tr>
+                <td>Number of SM Checked In</td>
+                <td id="checkedInColumn">0</td>
+            </tr>
+            <tr>
+                <td>Number of SM Checked Out</td>
+                <td id="checkedOutColumn">0</td>
+            </tr>
+            <tr>
+                <td>Number of SM Walked In</td>
+                <td id="walkedInColumn">0</td>
+            </tr>
+        </tbody>
+    </table>
+
 
 
     <!-- Loader -->
@@ -99,8 +127,9 @@
 
 <!-- Excel Preview Script -->
 <script>
-    window.shouldRunAfterSave = true;
-     window.isCheckInOutPage = true;
+    window.isCheckInOutPage = true;
+
+    let smIdCounter = null;
 
     $("#excelFile").on("change", function (e) {
         const file = e.target.files[0];
@@ -152,6 +181,8 @@
                     formattedData.push(rowData);
                 }
 
+                const lastRow = json[json.length - 1];
+                smIdCounter = lastRow[0] ?? null;
 
                 const colors = ["#f9f9f9", "#eef9f9", "#f0f9ff", "#fff0f0"]; // or your actual color array
                 const uploadCounter = 1; // you can manage this as per your logic
@@ -191,12 +222,15 @@
                             $(row).css('border', '2px solid red');
                         }
                     }
+
+
                 });
 
+                debugger;
+                RenderUpdatedEventSummaryTable();
                 document.getElementById('addRowButton').classList.remove('d-none');
 
             } catch (error) {
-                console.error("Error while processing Excel:", error);
             } finally {
                 $("#loader").addClass("d-none"); // Hide loader after processing
             }
@@ -205,6 +239,46 @@
         reader.readAsArrayBuffer(file);
     });
 
+    function RenderUpdatedEventSummaryTable() {
+        var previewTable = $("#previewTable");
+        var checkedInIndex = getColumnIndex(previewTable, "Checked In");
+        var checkedOutIndex = getColumnIndex(previewTable, "Checked Out");
+        debugger;
+
+        // Ensure columns were found
+        if (checkedInIndex === -1 || checkedOutIndex === -1) {
+            console.error("Checked In or Checked Out columns not found!");
+            return;
+        }
+
+        let totalSM = 0;
+        let checkedInCount = 0;
+        let checkedOutCount = 0;
+
+        // Loop through table body rows (excluding the header)
+        previewTable.find("tbody tr").each(function () {
+            totalSM++;
+
+            let cells = $(this).find("td");
+            let checkedInText = cells.eq(checkedInIndex).text().trim().toLowerCase();
+            let checkedOutText = cells.eq(checkedOutIndex).text().trim().toLowerCase();
+
+            if (checkedInText === "yes") {
+                checkedInCount++;
+            }
+
+            if (checkedOutText === "yes") {
+                checkedOutCount++;
+            }
+        });
+
+        // Update eventSummaryTable values
+        $("#totalSmColumn").text(totalSM);
+        $("#checkedInColumn").text(checkedInCount);
+        $("#checkedOutColumn").text(checkedOutCount);
+        $("#walkedInColumn").text(walkInSmCount);
+        $("#eventSummaryTable").show();
+    }
 
     function UpdateExcelFile() {
         const table = document.getElementById("previewTable");
@@ -256,6 +330,7 @@
             }
         });
     }
+
 </script>
 
 <!-- Styles -->
