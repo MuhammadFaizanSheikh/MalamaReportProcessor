@@ -43,7 +43,7 @@ namespace ExcelFilesCompiler.Controllers.Services
             var G6PDDataTable = GetDataFromFile(G6PDFile, fileConfigG6PD.Headers, fileConfigG6PD.SelectedColumns, fileConfigG6PD.stoppingKeyword, isG6PD: true, out string taskForceValue, out long totalRecordValueInG6pdFile);
             CheckG6PDTotalAssignedCountWithTotalRow(G6PDDataTable, totalRecordValueInG6pdFile);
             ProcessExcelFiles(files, G6PDDataTable, processingSequence, fileConfigurations, parsedLastEventDate, visionDate, dentalDate, phaDate, hivDate, hearingDate, parsedEventDate, lastDentalExam, vision, dental, pha, hiv, hearing, eventId);
-            MergeSomeMoreColumns(G6PDDataTable, taskForceValue, 1);
+            MergeSomeMoreColumns(G6PDDataTable, taskForceValue, eventId);
             var headerMapping = GetHeaderMapping();
             string[] predefinedColumnOrder = GetPredefinedColumnHeader();
             var preparedDataTable = RenameReorderAndProcess(G6PDDataTable, headerMapping, predefinedColumnOrder);
@@ -619,7 +619,7 @@ namespace ExcelFilesCompiler.Controllers.Services
             };
         }
 
-        private void MergeSomeMoreColumns(DataTable parentTable, string taskForceValue, long eventId)
+        private void MergeSomeMoreColumns(DataTable parentTable, string taskForceValue, string eventId)
         {
             if (!parentTable.Columns.Contains("TaskForce"))
             {
@@ -641,7 +641,8 @@ namespace ExcelFilesCompiler.Controllers.Services
                 parentTable.Columns.Add("Barcode", typeof(string));
             }
 
-            string paddedEventId = eventId.ToString("D5");
+            //string paddedEventId = eventId.ToString("D5");
+            string paddedEventId = eventId.ToString();
 
             foreach (DataRow parentRow in parentTable.Rows)
             {

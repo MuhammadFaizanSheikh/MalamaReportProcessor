@@ -929,16 +929,13 @@ function saveChangesButton() {
     //let newRowData = new Array(79).fill('');
     const fullSsnValue = updatedData['FULL SSN'];
     const last4Index = keys.indexOf('LAST 4');
-    const smIdIndex = keys.indexOf('SM ID');// Find index of FULL SSN column
-    const checkedInIndex = keys.indexOf('Checked In');
-    const checkedOutIndex = keys.indexOf('Checked Out');
-    const walkinSMIndex = keys.indexOf('Walk-In Service Member');
     if (isAddingNewRow) {
         // Initialize a full row with empty values
         const fullRowData = Array(keys.length).fill('');
 
         // set sm id counter in index 0 (for edit mode)
         smIdCounter++;
+        const smIdIndex = keys.indexOf('SM ID');// Find index of FULL SSN column
         fullRowData[smIdIndex] = smIdCounter.toString();
 
         if (last4Index !== -1 && fullSsnValue) {
@@ -954,9 +951,29 @@ function saveChangesButton() {
             }
         });
 
+        const checkedInIndex = keys.indexOf('Checked In');
+        const checkedOutIndex = keys.indexOf('Checked Out');
+
         fullRowData[checkedInIndex] = $('#checkedIn').val();
         fullRowData[checkedOutIndex] = $('#checkedOut').val();
+
+        const walkinSMIndex = keys.indexOf('Walk-In Service Member');
         fullRowData[walkinSMIndex] = 'Yes';
+
+        const table = $('#previewTable').DataTable();
+        const barcodeIndex = keys.indexOf('Barcode');
+        const barcodeValue = table.cell(0, barcodeIndex).data();
+
+        let finalBarcodeValue = '';
+
+        if (barcodeValue && barcodeValue.includes('-')) {
+            finalBarcodeValue = barcodeValue.split('-')[0] + '-' + smIdCounter.toString().padStart(5, '0');
+        } else {
+            finalBarcodeValue = barcodeValue + '-' + smIdCounter.toString().padStart(5, '0');
+        }
+
+        fullRowData[barcodeIndex] = finalBarcodeValue;
+
 
         $('#previewTable').DataTable().row.add(fullRowData).draw(false);
         walkInServiceMemberCount++;
