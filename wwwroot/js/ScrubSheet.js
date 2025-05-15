@@ -895,6 +895,8 @@ function AdjustWidth() {
 
 /*let walkInSmCount = 0;*/
 function saveChangesButton() {
+    alert('atesting')
+    debugger;
     const modalInputs = $('#editModal').find('input, select, textarea');
     const updatedData = {};
 
@@ -957,8 +959,10 @@ function saveChangesButton() {
         fullRowData[checkedInIndex] = $('#checkedIn').val();
         fullRowData[checkedOutIndex] = $('#checkedOut').val();
 
-        const walkinSMIndex = keys.indexOf('Walk-In Service Member');
-        fullRowData[walkinSMIndex] = 'Yes';
+        if (window.isCheckInOutPage) {
+            const walkinSMIndex = keys.indexOf('Walk-In Service Member');
+            fullRowData[walkinSMIndex] = 'Yes';
+        }
 
         const table = $('#previewTable').DataTable();
         const barcodeIndex = keys.indexOf('Barcode');
@@ -976,7 +980,10 @@ function saveChangesButton() {
 
 
         $('#previewTable').DataTable().row.add(fullRowData).draw(false);
-        walkInServiceMemberCount++;
+
+        if (window.isCheckInOutPage) {
+            walkInServiceMemberCount++;
+        }
     }
     else {
         if (last4Index !== -1 && fullSsnValue) {
