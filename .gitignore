@@ -21,3 +21,6 @@
 /bin/Debug/net8.0/ExcelFilesCompiler.runtimeconfig.json
 /bin/Debug/net8.0/MalamaReportProcessor.exe
 /bin/Debug/net8.0/MalamaReportProcessor.pdb
+/bin/Debug/net8.0/MalamaReportProcessor.deps.json
+/bin/Debug/net8.0/MalamaReportProcessor.runtimeconfig.json
+/bin/Debug/net8.0/MalamaReportProcessor.staticwebassets.runtime.json
