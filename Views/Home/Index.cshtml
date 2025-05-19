@@ -209,6 +209,7 @@
 
 
             document.getElementById('generateExcelButton').addEventListener('click', function () {
+                $('#previewTable').DataTable().search('').draw(); // clear search
                 const originalTable = document.getElementById('previewTable');
                 if (!originalTable) {
                     console.error('Table element not found.');
@@ -538,7 +539,7 @@
                     headers.unshift('SM ID');
                     headers.push('Checked In', 'Checked Out', 'Checked In By', 'Checked Out By', 'Checked In Time', 'Checked Out Time');
                     headers.push('Actions');
-                    let headerRowHtml = headers.map(header => `<th>${header}</th>`).join('');
+                    let headerRowHtml = headers.map(header => `<th style="background-color: rgba(120, 130, 221, 1); color: white;">${header}</th>`).join('');
                     tableHead.innerHTML = `<tr>${headerRowHtml}</tr>`;
                 }
 
