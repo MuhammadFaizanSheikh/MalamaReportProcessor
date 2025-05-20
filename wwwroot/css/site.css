@@ -21,7 +21,7 @@ body {
     background-color: rgba(80,90,201,0.1);
 }
 
-.form-control, .btn {
+/*.form-control, .btn {
     background-color: rgba(80,90,201,1);
     border-color: rgba(80,90,201,1);
     color: white;
@@ -31,7 +31,7 @@ select.form-control, .event-input {
     background-color: #fff;
     border-color: #ced4da;
     color: black;
-}
+}*/
 
 .button-container {
     gap: 15px;
