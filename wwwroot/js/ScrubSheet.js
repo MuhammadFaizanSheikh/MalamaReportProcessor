@@ -1017,6 +1017,7 @@ function saveChangesButton() {
     //let newRowData = new Array(79).fill('');
     const fullSsnValue = updatedData['FULL SSN'];
     const last4Index = keys.indexOf('LAST 4');
+    debugger;
 
     if (isDuplicateDodId(updatedData, isAddingNewRow, keys)) {
         alert('This DOD ID already exists in this sheet.');
@@ -1189,7 +1190,7 @@ function isDuplicateDodId(updatedData, isAddingNewRow, keys) {
             }
         } else {
             // For editing, skip same SM ID row
-            if (smId !== smIdEditing && dodId === dodIdToCheck) {
+            if (smId != smIdEditing && dodId === dodIdToCheck) {
                 isDuplicate = true;
                 return false; // break loop
             }
