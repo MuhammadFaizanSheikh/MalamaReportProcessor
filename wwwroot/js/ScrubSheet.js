@@ -95,7 +95,9 @@ const tableToKeysIndexMap = [
     keys.indexOf("Tet/TDP Needed"),        // Tet/TDP
     keys.indexOf("Varicella Needed"),       // Varicella
     keys.indexOf("Checked In"),       // Varicella
-    keys.indexOf("Checked Out")       // Varicella
+    keys.indexOf("Checked Out"),
+    keys.indexOf("Checked In By"),
+    keys.indexOf("Checked Out By")
 ];
 
 
@@ -130,7 +132,7 @@ const categories = {
         "IMM Needed", "Hep B Needed", "FLU Needed", "MMR Needed", "Hep A Needed", "Tet/TDP Needed", "Varicella Needed"
     ],
     "Check In Out Information": [
-        "Checked In", "Checked Out"
+        "Checked In", "Checked Out", "Checked In By", "Checked Out By"
     ]
 };
 
@@ -413,12 +415,18 @@ function populateModalForEdit(data) {
                                     </div>
                                 `;
             }
-            else if (key === 'Checked In' || key === 'Checked Out') {
+            else if (key === 'Checked In' || key === 'Checked Out' || key === 'Checked In By' || key === 'Checked Out By') {
                 if (key === 'Checked In') {
                     $("#checkedIn").val(value).trigger("change");
                 }
                 else if (key === 'Checked Out') {
                     $("#checkedOut").val(value);
+                }
+                else if (key === 'Checked In By') {
+                    $("#checkedInBy").val(value);
+                }
+                else if (key === 'Checked Out By') {
+                    $("#checkedOutBy").val(value);
                 }
             }
             // Default text field
@@ -611,7 +619,7 @@ function populateModalForAdd(data) {
 
             // Default text field
             else {
-                if (key !== 'Checked In' && key !== 'Checked Out') {
+                if (key !== 'Checked In' && key !== 'Checked Out' && key !== 'Checked In By' && key !== 'Checked Out By') {
                     inputHtml = `
                                     <div class="form-group col-lg-2">
                                         <label>${key}</label>
@@ -962,6 +970,23 @@ function saveChangesButton() {
     const updatedData = {};
 
     const requiredFields = ['FULL NAME', 'FULL SSN', 'DOD ID', 'DOB', 'TaskForce'];
+
+    if (window.isCheckInOutPage)
+    {
+        const checkedInDropdown = document.getElementById("checkedIn");
+
+        if (checkedInDropdown.value === "Yes") {
+            requiredFields.push('checkedInBy');
+            //$("#checkedInBy").removeClass('valid-class').addClass('highlight-error');
+        }
+
+        const checkedOutDropdown = document.getElementById("checkedOut");
+
+        if (checkedOutDropdown.value === "Yes") {
+            requiredFields.push('checkedOutBy');
+            //$("#checkedOutBy").removeClass('valid-class').addClass('highlight-error');
+        }
+    }
     let hasError = false;
 
     // Clear previous highlights
@@ -993,7 +1018,6 @@ function saveChangesButton() {
     const fullSsnValue = updatedData['FULL SSN'];
     const last4Index = keys.indexOf('LAST 4');
 
-    debugger;
     if (isDuplicateDodId(updatedData, isAddingNewRow, keys)) {
         alert('This DOD ID already exists in this sheet.');
         return;
@@ -1026,6 +1050,28 @@ function saveChangesButton() {
 
         fullRowData[checkedInIndex] = $('#checkedIn').val();
         fullRowData[checkedOutIndex] = $('#checkedOut').val();
+
+        const checkedInByIndex = keys.indexOf('Checked In By');
+        const checkedOutByIndex = keys.indexOf('Checked Out By');
+
+        fullRowData[checkedInByIndex] = $('#checkedInBy').val();
+        fullRowData[checkedOutByIndex] = $('#checkedOutBy').val();
+
+        const checkedInTimeIndex = keys.indexOf('Checked In Time');
+
+        if ($('#checkedIn').val() === "Yes") {
+            fullRowData[checkedInTimeIndex] = formatDateTime24(new Date());
+        } else {
+            fullRowData[checkedInTimeIndex] = "";
+        }
+
+        const checkedOutTimeIndex = keys.indexOf('Checked Out Time');
+
+        if ($('#checkedOut').val() === "Yes") {
+            fullRowData[checkedOutTimeIndex] = formatDateTime24(new Date());
+        } else {
+            fullRowData[checkedOutTimeIndex] = "";
+        }
 
         if (window.isCheckInOutPage) {
             const walkinSMIndex = keys.indexOf('Walk-In Service Member');
@@ -1063,14 +1109,35 @@ function saveChangesButton() {
         updatedData['Checked In'] = $('#checkedIn').val();
         updatedData['Checked Out'] = $('#checkedOut').val();
 
+        updatedData['Checked In By'] = $('#checkedInBy').val();
+        updatedData['Checked Out By'] = $('#checkedOutBy').val();
+
+        debugger; 
+        if ($('#checkedIn').val() === "Yes") {
+            updatedData['Checked In Time'] = formatDateTime24(new Date());
+        }
+        else
+        {
+            updatedData['Checked In Time'] = "";
+        }
+
+        if ($('#checkedOut').val() === "Yes") {
+            updatedData['Checked Out Time'] = formatDateTime24(new Date());
+
+        }
+        else {
+            updatedData['Checked Out Time'] = "";
+        }
+
         keys.forEach((key, index) => {
             if (updatedData[key] !== undefined) {
-                // Keep original value if empty
-                if (updatedData[key].trim() !== '') {
+                // Always update if key is 'Checked In By' or 'Checked Out By'
+                if (key === 'Checked In By' || key === 'Checked Out By' || key === 'Checked In Time' || key === 'Checked Out Time' || updatedData[key].trim() !== '') {
                     currentRow.find('td').eq(index).text(updatedData[key]);
                 }
             }
         });
+
     }
 
     AdjustWidth();
@@ -1084,6 +1151,20 @@ function saveChangesButton() {
         UpdateExcelFile();
     }
 
+}
+
+function formatDateTime24(date) {
+    const pad = (num) => num.toString().padStart(2, '0');
+
+    const month = pad(date.getMonth() + 1);  // Months are zero-based
+    const day = pad(date.getDate());
+    const year = date.getFullYear();
+
+    const hours = pad(date.getHours());       // 24-hour format by default
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+
+    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 function isDuplicateDodId(updatedData, isAddingNewRow, keys) {
@@ -1304,6 +1385,8 @@ function addRow() {
     populateModalForAdd(emptyData);
     $('#checkedIn').val('No');
     $('#checkedOut').val('No').prop('disabled', true);
+    $("#checkedInBy").val('');
+    $("#checkedOutBy").val('');
     $('#editModal').modal('show');
 }
 
