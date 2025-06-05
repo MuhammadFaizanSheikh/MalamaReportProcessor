@@ -458,7 +458,7 @@ namespace ExcelFilesCompiler.Controllers.Services
                 "LIPID PANEL",
                 "Cholesterol / HDL Cholesterol",
                 "Framingham",
-                "EKG",
+                "EKG (Date)",
                 "EKG NEEDED",
                 "hcg",
                 "IMM Needed",
@@ -539,7 +539,7 @@ namespace ExcelFilesCompiler.Controllers.Services
                 { "LIPID PANEL", "LIPID PANEL" },
                 { "Cholesterol / HDL Cholesterol", "Cholesterol / HDL Cholesterol" },
                 { "Framingham", "Framingham" },
-                { "EKG", "EKG" },
+                { "EKG (Date)", "EKG (Date)" },
                 { "EKG NEEDED", "EKG NEEDED" },
                 { "hcg", "hcg" },
                 { "IMM Needed", "IMM Needed" },
@@ -1083,8 +1083,8 @@ namespace ExcelFilesCompiler.Controllers.Services
             if (!parentTable.Columns.Contains("Framingham"))
                 parentTable.Columns.Add("Framingham", typeof(string));
 
-            if (!parentTable.Columns.Contains("EKG"))
-                parentTable.Columns.Add("EKG", typeof(string));
+            if (!parentTable.Columns.Contains("EKG (Date)"))
+                parentTable.Columns.Add("EKG (Date)", typeof(string));
 
             if (!parentTable.Columns.Contains("EKG NEEDED"))
                 parentTable.Columns.Add("EKG NEEDED", typeof(string));
@@ -1279,11 +1279,11 @@ namespace ExcelFilesCompiler.Controllers.Services
                     }
                     parentRow["Cholesterol / HDL Cholesterol"] = "NEEDED";
 
-                    if (!parentRow.Table.Columns.Contains("EKG"))
+                    if (!parentRow.Table.Columns.Contains("EKG (Date)"))
                     {
-                        parentRow.Table.Columns.Add("EKG", typeof(string));
+                        parentRow.Table.Columns.Add("EKG (Date)", typeof(string));
                     }
-                    parentRow["EKG"] = "NEEDED";
+                    parentRow["EKG (Date)"] = "NEEDED";
 
                     if (!parentRow.Table.Columns.Contains("EKG NEEDED"))
                     {
@@ -1318,11 +1318,11 @@ namespace ExcelFilesCompiler.Controllers.Services
                     }
                     parentRow["Cholesterol / HDL Cholesterol"] = "N/A";
 
-                    if (!parentRow.Table.Columns.Contains("EKG"))
+                    if (!parentRow.Table.Columns.Contains("EKG (Date)"))
                     {
-                        parentRow.Table.Columns.Add("EKG", typeof(string));
+                        parentRow.Table.Columns.Add("EKG (Date)", typeof(string));
                     }
-                    parentRow["EKG"] = "N/A";
+                    parentRow["EKG (Date)"] = "N/A";
 
                     if (!parentRow.Table.Columns.Contains("EKG NEEDED"))
                     {
