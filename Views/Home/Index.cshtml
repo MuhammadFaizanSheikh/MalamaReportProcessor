@@ -661,6 +661,7 @@
                 // Get all data from the DataTable
                 let tableRows = [];
                 $('#previewTable tbody tr').each(function () {
+                    let $cells = $(this).find('td');
                     let row = {
                         SmId: parseInt(getCellValue($cells, "SM ID")),
                         FullName: getCellValue($cells, "FULL NAME"),
