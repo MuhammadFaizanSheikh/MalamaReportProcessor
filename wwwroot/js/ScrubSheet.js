@@ -242,6 +242,7 @@ const dropdownOptionsMapping = {
         { value: "4", label: "4" }
     ],
     "VRC": [
+        { value: "", label: "" },
         { value: "1", label: "1" },
         { value: "2", label: "2" },
         { value: "3O", label: "3O" },
@@ -253,6 +254,7 @@ const dropdownOptionsMapping = {
         { value: "NA", label: "NA" }
     ],
     "Vision Mask Insert": [
+        { value: "", label: "" },
         { value: "N", label: "N" },
         { value: "Y", label: "Y" },
         { value: "NA", label: "NA" }
@@ -582,6 +584,17 @@ function populateModalForEdit(data) {
             inputField.on('change', checkIMMNeededField);
         }
     });
+
+    // After modal is populated, bind the event listener to the Dental Needed field
+    const dentalNeededField = modalContent.find('select[name="Dental Needed"]');
+    if (dentalNeededField.length > 0) {
+        dentalNeededField.on('change', function () {
+            const dentalNeededValue = $(this).val();
+            if (dentalNeededValue) {
+                handleBWXNeededLogicOnDentalNeeded(dentalNeededValue)
+            }
+        });
+    }
 
     const aboField = document.querySelector('[name="ABO"]');
     //handleABOtoABONeededLogic(aboField.value);
@@ -1056,7 +1069,7 @@ const validationRules = {
     "DOD ID": { type: "numeric", maxLength: 10 },
     //"RANK": { type: "alphanumeric", uppercase: true, maxLength: 3 },
     //"MOS": { type: "alphanumeric", uppercase: true },
-    //"UIC": { type: "alphanumeric", uppercase: true },
+    "UIC": { type: "alphanumeric", uppercase: true, maxLength: 6 },
     //"PULHES": { type: "numeric", maxLength: 5 },
     //"HRC": { type: "alphanumeric", uppercase: true },
     //"EventID": { type: "alphanumeric", uppercase: true },
@@ -1109,6 +1122,22 @@ function validateInput(field, value) {
             } else {
                 $(field).removeClass('is-invalid');
             }
+        }
+
+        if (rules.type === "alphanumeric") {
+            // Allow only letters and numbers
+            let cleanedValue = value.replace(/[^a-z0-9]/gi, ''); // remove special chars
+
+            if (rules.uppercase) {
+                cleanedValue = cleanedValue.toUpperCase();
+            }
+
+            // Restrict to max length
+            if (rules.maxLength && cleanedValue.length > rules.maxLength) {
+                cleanedValue = cleanedValue.slice(0, rules.maxLength);
+            }
+
+            $(field).val(cleanedValue);
         }
 
         if (rules.format) {
