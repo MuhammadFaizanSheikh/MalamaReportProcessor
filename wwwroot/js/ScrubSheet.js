@@ -8,7 +8,7 @@
     "LIPID PANEL", "Cholesterol / HDL Cholesterol", "Framingham", "EKG (Date)", "EKG NEEDED", "Pregnancy Test Needed",
     "IMM Needed", "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed", "TaskForce", "Notes", "Over 44",
     "EventDate", "Event End Date", "EventID", "Vision Win", "Dental Win", "PHA Win", "HIV Win", "Hearing WIN", "Barcode",
-    "Vitals Status", "Hep B Needed Status", "Hep B Reason", "FLU Needed Status", "FLU Reason", "MMR Status", "MMR Reason", "Hep A Needed Status", "Hep A Reason", "Tet/TDP Needed Status", "Tet/TDP Reason", "Varicella Needed Status", "Varicella Reason", "SICKLE Status", "Sickle Reason", "HIV Status", "HIV Barcode", "HIV Reason", "ABO Status", "ABO Reason", "DNA Status", "DNA Reason", "G6PD Checkout Status", "G6PD Reason", "Lipid Status", "Lipid Reason", "EKG Needed Status", "EKG Needed Reason", "PHA Status", "PHA Follow Up", "Hearing Status", "Audiologist Service Completed", "Vision Status", "Optometrist Service Completed", "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Reason",
+    "Vitals Status", "Hep B Needed Status", "Hep B Reason", "FLU Needed Status", "FLU Reason", "MMR Status", "MMR Reason", "Hep A Needed Status", "Hep A Reason", "Tet/TDP Needed Status", "Tet/TDP Reason", "Varicella Needed Status", "Varicella Reason", "SICKLE Status", "Sickle Reason", "HIV Status", "HIV Barcode", "HIV Reason", "ABO Status", "ABO Reason", "DNA Status", "DNA Reason", "G6PD Checkout Status", "G6PD Reason", "Lipid Status", "Lipid Reason", "EKG Needed Status", "EKG Needed Reason", "PHA Status", "PHA Follow Up", "Hearing Status", "Audiologist Service Completed", "Vision Status", "Optometrist Service Completed", "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Class Reason", "Dental Treatment Reason",
     "Checked In", "Checked Out", "Checked In By",
     "Checked Out By", "Checked In Time", "Checked Out Time", "Walk-In Service Member"
 ];
@@ -140,6 +140,7 @@ const tableToKeysIndexMap = [
     keys.indexOf("Class (Dental Exam)"),
     keys.indexOf("Dental Treatment"),
     keys.indexOf("Final Dental Class"),
+    keys.indexOf("Dental Treatment Class Reason"),
     keys.indexOf("Dental Treatment Reason")
 ];
 
@@ -281,7 +282,8 @@ const categories = {
                 { field: "Class (Dental Exam)", dependsOn: "Dental Exam Status", showWhen: ["Completed"] },
                 { field: "Dental Treatment", dependsOn: "Class (Dental Exam)", showWhen: ["3"] },
                 { field: "Final Dental Class", dependsOn: "Dental Treatment", showWhen: ["Yes"] },
-                { field: "Dental Treatment Reason", dependsOn: "Dental Treatment", showWhen: ["No"] }
+                { field: "Dental Treatment Reason", dependsOn: "Dental Treatment", showWhen: ["No"] },
+                { field: "Dental Treatment Class Reason", dependsOn: "Final Dental Class", showWhen: ["3"] }
             ]
         ]
 
@@ -337,7 +339,7 @@ const dropdownFieldsForEdit = [
     "Hearing Status", "Audiologist Service Completed",
     "Vision Status", "Optometrist Service Completed",
     "PHA Status", "PHA Follow Up",
-    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Reason"
+    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Reason", "Dental Treatment Class Reason"
 ];
 
 const tableDataFieldsForEdit = ["TaskForce"];
@@ -364,7 +366,7 @@ const dropdownFieldsForAdd = [
     "Hearing Status", "Audiologist Service Completed",
     "Vision Status", "Optometrist Service Completed",
     "PHA Status", "PHA Follow Up",
-    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Reason"
+    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment", "Final Dental Class", "Dental Treatment Reason", "Dental Treatment Class Reason"
 ];
 
 const readOnlyFieldsForAdd = [
@@ -588,6 +590,14 @@ const dropdownOptionsMapping = {
         { value: "1", label: "1" },
         { value: "2", label: "2" },
         { value: "3", label: "3" }
+    ], "Dental Treatment Class Reason": [
+        { value: "", label: "" },
+        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
+        { value: "SM Refused", label: "SM Refused" },
+        { value: "Time limitation", label: "Time limitation" },
+        { value: "Procedure not offered", label: "Procedure not offered" },
+        { value: "Military excused", label: "Military excused" },
+        { value: "SM current receiving treatment", label: "SM current receiving treatment" }
     ]
 };
 
@@ -1731,6 +1741,8 @@ $(document).on('change', '#checkedIn', function () {
     } else {
         $('#checkedOut').prop('disabled', true).val('No'); // Reset value to No when disabled
     }
+
+    applyDependencies($("#modalBodyContent"), {});
 });
 
 function isValidDate(dateString) {

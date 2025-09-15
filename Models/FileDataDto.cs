@@ -1,8 +1,10 @@
 ﻿using ExcelFilesCompiler.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace ExcelToCsv.Models
 {
+    [Index(nameof(EventId), nameof(isDeleted))]
     public class FileDataDto : GenericProperties
     {
         [Key]
@@ -129,6 +131,7 @@ namespace ExcelToCsv.Models
         public string? ClassDentalExam { get; set; }
         public string? DentalTreatment { get; set; }
         public string? FinalDentalClass { get; set; }
+        public string? DentalTreatmentClassReason { get; set; }
         public string? DentalTreatmentReason { get; set; }
     }
 }
