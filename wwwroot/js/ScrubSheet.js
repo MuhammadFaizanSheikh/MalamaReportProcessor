@@ -324,7 +324,7 @@ const readOnlyFieldsForEdit = [
     "Hearing Date", "HRC", "Hearing Profile", "Lab Requisition", "Sickle Date",
     "HIV NEXT TEST DATE", "Quest", "G6PD Date", "G6PD Status", "IMM Needed"
     //Check out section fields
-    , "Vitals Status"
+    //, "Vitals Status"
 ];
 
 const requiredFields = ['LAST NAME', 'FIRST NAME', 'FULL NAME', 'FULL SSN', 'DOD ID', 'DOB', 'TaskForce', 'SEX'];
@@ -376,7 +376,7 @@ const readOnlyFieldsForAdd = [
     "Hearing Date", "HRC", "Hearing Profile", "Lab Requisition", "Sickle Date",
     "HIV NEXT TEST DATE", "Quest", "G6PD Date", "G6PD Status", "IMM Needed"
     //Check out section fields
-    , "Vitals Status"
+    //, "Vitals Status"
 ];
 
 const tableDataFieldsForAdd = [
@@ -456,6 +456,7 @@ const dropdownOptionsMapping = {
         { value: "N/A", label: "N/A" }
     ],
     "Vitals Status": [
+        { value: "", label: "" },
         { value: "Completed", label: "Completed" }
     ],
     "Hep B Reason": [
@@ -682,13 +683,13 @@ function applyDependencies(modalContent, data) {
 
 $("#checkedOut").on("change", function () {
     const val = $(this).val();
-    if (val === "Yes") {
-        // Set Vital Status explicitly
-        $('[name="Vitals Status"]').val("Completed");
-    } else {
-        // Clear Vital Status
-        $('[name="Vitals Status"]').val("");
-    }
+    //if (val === "Yes") {
+    //    // Set Vital Status explicitly
+    //    $('[name="Vitals Status"]').val("Completed");
+    //} else {
+    //    // Clear Vital Status
+    //    $('[name="Vitals Status"]').val("");
+    //}
 
     // Re-evaluate dependencies and required
     applyDependencies($("#modalBodyContent"), {});
