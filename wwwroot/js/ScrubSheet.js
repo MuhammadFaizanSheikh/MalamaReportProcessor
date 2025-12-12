@@ -1,4 +1,5 @@
-﻿const keys = [
+﻿//*************************************************this is the line where edit work was completed and tested********************************************************
+const keys = [
     "Actions", "SM ID", "FULL NAME", "FULL SSN", "LAST 4", "DOD ID", "RANK", "AGE", "SEX", "MOS",
     "AGR", "UIC", "MRC", "DOB", "OVER 40", "Dental Due", "Dental Exam", "Dental Needed",
     "PANO Needed", "BWX Needed", "DRC", "PHA Date", "PHA Due", "PHA Needed", "PULHES", "Vision Date",
@@ -8,16 +9,16 @@
     "LIPID PANEL", "Cholesterol / HDL Cholesterol", "Framingham", "EKG (Date)", "EKG NEEDED", "Pregnancy Test Needed",
     "IMM Needed", "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed", "TaskForce", "Notes", "Over 44",
     "EventDate", "Event End Date", "EventID", "Vision Win", "Dental Win", "PHA Win", "HIV Win", "Hearing WIN", "Barcode",
-    "Vitals Status", "Hep B Needed Status", "Hep B Reason", "FLU Needed Status", "FLU Reason", "MMR Status", "MMR Reason", "Hep A Needed Status", "Hep A Reason", "Tet/TDP Needed Status", "Tet/TDP Reason", "Varicella Needed Status", "Varicella Reason", "SICKLE Status", "Sickle Reason", "HIV Status", "HIV Barcode", "HIV Reason", "ABO Status", "ABO Reason", "DNA Status", "DNA Reason", "G6PD Checkout Status", "G6PD Reason", "Lipid Status", "Lipid Reason", "EKG Needed Status", "EKG Needed Reason", "PHA Status", "PHA Follow Up", "Hearing Status", "Audiologist Service Completed", "Vision Status", "Optometrist Service Completed", "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment Received", "Final Dental Class", "Final Treatment Class 3 Reason", "Dental Treatment Reason",
     "Checked In", "Checked Out", "Checked In By",
-    "Checked Out By", "Checked In Time", "Checked Out Time", "Walk-In Service Member"
+    "Checked Out By", "Checked In Time", "Checked Out Time", "Walk-In Service Member",
+    "IMM Needed Status", "Labs Needed Status", "PHA Needed Status", "Audiologist Needed Status", "Vision Needed Status","Dental Needed Status"
 ];
 
 const tableToKeysIndexMap = [
     keys.indexOf("FULL NAME"),      // FULL NAME 
     keys.indexOf("AGE"),            // AGE
     keys.indexOf("UIC"),            // UIC
-    keys.indexOf("FULL SSN"),         // LAST 4
+    keys.indexOf("FULL SSN"),         // LAST 4Final Dental Class
     keys.indexOf("SEX"),            // SEX
     keys.indexOf("MRC"),            // MRC
     keys.indexOf("DOD ID"),         // DOD ID
@@ -96,52 +97,19 @@ const tableToKeysIndexMap = [
     keys.indexOf("Hep A Needed"),          // Hep A
     keys.indexOf("Tet/TDP Needed"),        // Tet/TDP
     keys.indexOf("Varicella Needed"),       // Varicella
-    keys.indexOf("Checked In"),       
+    keys.indexOf("Checked In"),
     keys.indexOf("Checked Out"),
     keys.indexOf("Checked In By"),
     keys.indexOf("Checked Out By"),
-    keys.indexOf("Vitals Status"),
-    keys.indexOf("Hep B Needed Status"),
-    keys.indexOf("Hep B Reason"),
-    keys.indexOf("FLU Needed Status"),
-    keys.indexOf("FLU Reason"),
-    keys.indexOf("MMR Status"),
-    keys.indexOf("MMR Reason"),
-    keys.indexOf("Hep A Needed Status"),
-    keys.indexOf("Hep A Reason"),
-    keys.indexOf("Tet/TDP Needed Status"),
-    keys.indexOf("Tet/TDP Reason"),
-    keys.indexOf("Varicella Needed Status"),
-    keys.indexOf("Varicella Reason"),
-    keys.indexOf("SICKLE Status"),
-    keys.indexOf("Sickle Reason"),
-    keys.indexOf("HIV Status"),
-    keys.indexOf("HIV Barcode"),
-    keys.indexOf("HIV Reason"),
-    keys.indexOf("ABO Status"),
-    keys.indexOf("ABO Reason"),
-    keys.indexOf("DNA Status"),
-    keys.indexOf("DNA Reason"),
-    keys.indexOf("G6PD Checkout Status"),
-    keys.indexOf("G6PD Reason"),
-    keys.indexOf("Lipid Status"),
-    keys.indexOf("Lipid Reason"),
-    keys.indexOf("EKG Needed Status"),
-    keys.indexOf("EKG Needed Reason"),
-    keys.indexOf("PHA Status"),
-    keys.indexOf("PHA Follow Up"),
-    keys.indexOf("Hearing Status"),
-    keys.indexOf("Audiologist Service Completed"),
-    keys.indexOf("Vision Status"),
-    keys.indexOf("Optometrist Service Completed"),
-    keys.indexOf("Dental X-Ray Status"),
-    keys.indexOf("Panoramic X-Ray"),
-    keys.indexOf("Dental Exam Status"),
-    keys.indexOf("Class (Dental Exam)"),
-    keys.indexOf("Dental Treatment Received"),
-    keys.indexOf("Final Dental Class"),
-    keys.indexOf("Final Treatment Class 3 Reason"),
-    keys.indexOf("Dental Treatment Reason")
+
+    /*Status fields*/
+    keys.indexOf("IMM Needed Status"),
+    keys.indexOf("Labs Needed Status"),
+    keys.indexOf("PHA Needed Status"),
+    keys.indexOf("Audiologist Needed Status"),
+    keys.indexOf("Vision Needed Status"),
+    keys.indexOf("Dental Needed Status")
+
 ];
 
 function getCellValue($cells, columnName) {
@@ -181,119 +149,22 @@ const categories = {
     "Check In Out Information": [
         "Checked In", "Checked Out", "Checked In By", "Checked Out By"
     ],
-    "Check Out Section": {
-        "Vitals": [
-            [
-                {
-                    field: "Vitals Status",
-                    dependsOn: null,
-                    showWhen: null
-                }
-            ]
-        ],
-        "Immunizations": [
-            [
-                { field: "Hep B Needed Status", dependsOn: "Hep B Needed", showWhen: ["NEEDED"] },
-                { field: "Hep B Reason", dependsOn: "Hep B Needed Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "FLU Needed Status", dependsOn: "FLU Needed", showWhen: ["NEEDED"] },
-                { field: "FLU Reason", dependsOn: "FLU Needed Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "MMR Status", dependsOn: "MMR Needed", showWhen: ["NEEDED"] },
-                { field: "MMR Reason", dependsOn: "MMR Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "Hep A Needed Status", dependsOn: "Hep A Needed", showWhen: ["NEEDED"] },
-                { field: "Hep A Reason", dependsOn: "Hep A Needed Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "Tet/TDP Needed Status", dependsOn: "Tet/TDP Needed", showWhen: ["NEEDED"] },
-                { field: "Tet/TDP Reason", dependsOn: "Tet/TDP Needed Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "Varicella Needed Status", dependsOn: "Varicella Needed", showWhen: ["NEEDED"] },
-                { field: "Varicella Reason", dependsOn: "Varicella Needed Status", showWhen: ["Not Completed"] }
-            ]
-        ],
-        "Labs": [
-            [
-                { field: "SICKLE Status", dependsOn: "SICKLE", showWhen: ["NEEDED"] },
-                { field: "Sickle Reason", dependsOn: "SICKLE Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "HIV Status", dependsOn: "HIV", showWhen: ["NEEDED"] },
-                { field: "HIV Reason", dependsOn: "HIV Status", showWhen: ["Not Completed"] },
-                { field: "HIV Barcode", dependsOn: "HIV Status", showWhen: ["Completed"] }
-            ],
-            [
-                { field: "ABO Status", dependsOn: "ABO Needed", showWhen: ["NEEDED"] },
-                { field: "ABO Reason", dependsOn: "ABO Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "DNA Status", dependsOn: "DNA", showWhen: ["NEEDED"] },
-                { field: "DNA Reason", dependsOn: "DNA Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "G6PD Checkout Status", dependsOn: "G6PD", showWhen: ["NEEDED"] },
-                { field: "G6PD Reason", dependsOn: "G6PD Checkout Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "Lipid Status", dependsOn: "Lipid Needed", showWhen: ["NEEDED"] },
-                { field: "Lipid Reason", dependsOn: "Lipid Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "EKG Needed Status", dependsOn: "EKG NEEDED", showWhen: ["NEEDED"] },
-                { field: "EKG Needed Reason", dependsOn: "EKG Needed Status", showWhen: ["Not Completed"] }
-            ],
-            [
-                { field: "Pregnancy Test Status", dependsOn: "Pregnancy Test Needed", showWhen: ["NEEDED"] },
-                { field: "Pregnancy Test Reason", dependsOn: "Pregnancy Test Status", showWhen: ["Not Completed"] }
-            ]
-        ],
-        "PHA": [
-            [
-                { field: "PHA Status", dependsOn: "PHA Needed", showWhen: ["NEEDED"] },
-                { field: "PHA Follow Up", dependsOn: "PHA Status", showWhen: ["Completed"] }
-            ]
-        ],
-        "Audiologist": [
-            [
-                { field: "Hearing Status", dependsOn: "HEARING Needed", showWhen: ["NEEDED"] },
-                { field: "Audiologist Service Completed", dependsOn: "Hearing Status", showWhen: ["Completed"] }
-            ]
-        ],
-        "Vision": [
-            [
-                { field: "Vision Status", dependsOn: "VISION Needed", showWhen: ["NEEDED"] },
-                { field: "Optometrist Service Completed", dependsOn: "Vision Status", showWhen: ["Completed"] }
-            ]
-        ],
-        "Dental": [
-            [
-                { field: "Dental X-Ray Status", dependsOn: null, showWhen: null }
-            ],
-            [
-                { field: "Panoramic X-Ray", dependsOn: "PANO Needed", showWhen: ["NEEDED"] }
-            ],
-            [
-                { field: "Dental Exam Status", dependsOn: "Dental Needed", showWhen: ["NEEDED"] },
-                { field: "Class (Dental Exam)", dependsOn: "Dental Exam Status", showWhen: ["Completed"] },
-                { field: "Dental Treatment Received", dependsOn: "Class (Dental Exam)", showWhen: ["3"] },
-                { field: "Final Dental Class", dependsOn: "Dental Treatment Received", showWhen: ["Yes"] },
-                { field: "Dental Treatment Reason", dependsOn: "Dental Treatment Received", showWhen: ["No"] },
-                { field: "Final Treatment Class 3 Reason", dependsOn: "Final Dental Class", showWhen: ["3"] }
-            ]
-        ]
+    "Status": [
+        { name: "IMM Needed Status", dependsOn: "IMM Needed" },
+        { name: "Labs Needed Status", dependsOn: "Lab Needed" },
+        { name: "PHA Needed Status", dependsOn: "PHA Needed" },
+        { name: "Audiologist Needed Status", dependsOn: "HEARING Needed" },
+        { name: "Vision Needed Status", dependsOn: "VISION Needed" },
+        { name: "Dental Needed Status", dependsOn: "Dental Needed" }
+    ]
 
-    }
 };
 
 
 let smIdEditing = 0;
 let currentRow;
 let isAddingNewRow = false;
+let primaryKeyForEdit = 0;
 
 function editRow(button) {
     currentRow = $(button).closest('tr');  // Get the row clicked for editing
@@ -306,6 +177,7 @@ function editRow(button) {
     });
 
     smIdEditing = currentRow.find('td').eq(keys.indexOf('SM ID')).text();
+    primaryKeyForEdit = currentRow.find('.row-id').val();
     populateModalForEdit(rowData);  // Pass the mapped data to populateModal
     document.getElementById("editModalLabel").innerText = "Edit Service Member";
     $('#editModal').modal('show');  // Show the modal
@@ -322,9 +194,8 @@ const readOnlyFieldsForEdit = [
     "HIV Win", "Vision Win", "PHA Win", "Hearing WIN", "Dental Win",
     "Dental Due", "Dental Exam", "PHA Date", "PULHES", "PHA Due", "Vision Date",
     "Hearing Date", "HRC", "Hearing Profile", "Lab Requisition", "Sickle Date",
-    "HIV NEXT TEST DATE", "Quest", "G6PD Date", "G6PD Status", "IMM Needed"
-    //Check out section fields
-    //, "Vitals Status"
+    "HIV NEXT TEST DATE", "Quest", "G6PD Date", "G6PD Status", "IMM Needed",
+    "IMM Needed Status", "Labs Needed Status", "PHA Needed Status", "Audiologist Needed Status", "Vision Needed Status", "Dental Needed Status"
 ];
 
 const requiredFields = ['LAST NAME', 'FIRST NAME', 'FULL NAME', 'FULL SSN', 'DOD ID', 'DOB', 'TaskForce', 'SEX'];
@@ -332,14 +203,7 @@ const requiredFields = ['LAST NAME', 'FIRST NAME', 'FULL NAME', 'FULL SSN', 'DOD
 const dropdownFieldsForEdit = [
     "SEX", "AGR", "MRC", "Dental Needed", "BWX Needed", "DRC", "PHA Needed",
     "VISION Needed", "NEAR VISION Needed", "VRC", "Vision 2PG", "Vision Mask Insert",
-    "HEARING Needed", "ABO", "ABO Needed", "DNA", "SICKLE", "G6PD", "HIV", "Lipid Needed", "EKG NEEDED", "Pregnancy Test Needed", "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed",
-    "Vitals Status",
-    "Hep B Needed Status", "Hep B Reason", "FLU Needed Status", "FLU Reason", "MMR Status", "MMR Reason", "Hep A Needed Status", "Hep A Reason", "Tet/TDP Needed Status", "Tet/TDP Reason", "Varicella Needed Status", "Varicella Reason",
-    "SICKLE Status", "Sickle Reason", "HIV Status", "HIV Reason", "ABO Status", "ABO Reason", "DNA Status", "DNA Reason", "G6PD Checkout Status", "G6PD Reason", "Lipid Status", "Lipid Reason", "EKG Needed Status", "EKG Needed Reason", "Pregnancy Test Status", "Pregnancy Test Reason",
-    "Hearing Status", "Audiologist Service Completed",
-    "Vision Status", "Optometrist Service Completed",
-    "PHA Status", "PHA Follow Up",
-    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment Received", "Final Dental Class", "Dental Treatment Reason", "Final Treatment Class 3 Reason"
+    "HEARING Needed", "ABO", "ABO Needed", "DNA", "SICKLE", "G6PD", "HIV", "Lipid Needed", "EKG NEEDED", "Pregnancy Test Needed", "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed"
 ];
 
 const tableDataFieldsForEdit = ["TaskForce"];
@@ -359,14 +223,7 @@ const dropdownFieldsForAdd = [
     "VISION Needed", "NEAR VISION Needed", "VRC", "Vision 2PG", "Vision Mask Insert",
     "HEARING Needed", "ABO", "ABO Needed", "DNA", "SICKLE", "G6PD", "HIV", "Lipid Needed",
     "LIPID PANEL", "Cholesterol / HDL Cholesterol", "Framingham", "EKG (Date)", "EKG NEEDED", "Pregnancy Test Needed",
-    "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed",
-    "Vitals Status",
-    "Hep B Needed Status", "Hep B Reason", "FLU Needed Status", "FLU Reason", "MMR Status", "MMR Reason", "Hep A Needed Status", "Hep A Reason", "Tet/TDP Needed Status", "Tet/TDP Reason", "Varicella Needed Status", "Varicella Reason",
-    "SICKLE Status", "Sickle Reason", "HIV Status", "HIV Reason", "ABO Status", "ABO Reason", "DNA Status", "DNA Reason", "G6PD Checkout Status", "G6PD Reason", "Lipid Status", "Lipid Reason", "EKG Needed Status", "EKG Needed Reason", "Pregnancy Test Status", "Pregnancy Test Reason",
-    "Hearing Status", "Audiologist Service Completed",
-    "Vision Status", "Optometrist Service Completed",
-    "PHA Status", "PHA Follow Up",
-    "Dental X-Ray Status", "Panoramic X-Ray", "Dental Exam Status", "Class (Dental Exam)", "Dental Treatment Received", "Final Dental Class", "Dental Treatment Reason", "Final Treatment Class 3 Reason"
+    "Hep B Needed", "Hep A Needed", "FLU Needed", "Tet/TDP Needed", "MMR Needed", "Varicella Needed"
 ];
 
 const readOnlyFieldsForAdd = [
@@ -375,8 +232,6 @@ const readOnlyFieldsForAdd = [
     "Dental Due", "Dental Exam", "PHA Date", "PULHES", "PHA Due", "Vision Date",
     "Hearing Date", "HRC", "Hearing Profile", "Lab Requisition", "Sickle Date",
     "HIV NEXT TEST DATE", "Quest", "G6PD Date", "G6PD Status", "IMM Needed"
-    //Check out section fields
-    //, "Vitals Status"
 ];
 
 const tableDataFieldsForAdd = [
@@ -389,8 +244,9 @@ const calendarFields = ["DOB"];
 const multilineTextbox = ["Notes"];
 
 const lengthConstraints = {
-    "HIV Barcode": { min: 9 }
+    "HIV Barcode": { min: 9}
 };
+
 
 
 // Define specific dropdown options for certain fields
@@ -458,323 +314,101 @@ const dropdownOptionsMapping = {
     "ABO Needed": [
         { value: "NEEDED", label: "NEEDED" },
         { value: "N/A", label: "N/A" }
-    ],
-    "Vitals Status": [
-        { value: "", label: "" },
-        { value: "Completed", label: "Completed" }
-    ],
-    "Hep B Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "FLU Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "MMR Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "Hep A Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "Tet/TDP Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "Varicella Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Refused", label: "Refused" },
-        { value: "Contraindication", label: "Contraindication" }
-    ],
-    "Sickle Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "HIV Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "ABO Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "DNA Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "G6PD Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "Lipid Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "EKG Needed Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ],
-    "Pregnancy Test Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "Unable to draw", label: "Unable to draw" },
-        { value: "Proof of service", label: "Proof of service" },
-        { value: "Not due", label: "Not due" }
-    ]
-    ,
-    "Dental Treatment Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "SM Refused", label: "SM Refused" },
-        { value: "Time limitation", label: "Time limitation" },
-        { value: "Procedure not offered", label: "Procedure not offered" },
-        { value: "Military excused", label: "Military excused" },
-        { value: "SM current receiving treatment", label: "SM current receiving treatment" }
-    ], "Dental Treatment Received": [
-        { value: "", label: "" },
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" }
-    ]
-    , "PHA Follow Up": [
-        { value: "", label: "" },
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" }
-    ]
-    , "Audiologist Service Completed": [
-        { value: "", label: "" },
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" }
-    ]
-    , "Optometrist Service Completed": [
-        { value: "", label: "" },
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" }
-    ]
-    , "Class (Dental Exam)": [
-        { value: "", label: "" },
-        { value: "1", label: "1" },
-        { value: "2", label: "2" },
-        { value: "3", label: "3" }
-    ]
-    , "Final Dental Class": [
-        { value: "", label: "" },
-        { value: "1", label: "1" },
-        { value: "2", label: "2" },
-        { value: "3", label: "3" }
-    ], "Final Treatment Class 3 Reason": [
-        { value: "", label: "" },
-        { value: "Insufficient Supplies", label: "Insufficient Supplies" },
-        { value: "SM Refused", label: "SM Refused" },
-        { value: "Time limitation", label: "Time limitation" },
-        { value: "Procedure not offered", label: "Procedure not offered" },
-        { value: "Military excused", label: "Military excused" },
-        { value: "SM current receiving treatment", label: "SM current receiving treatment" }
     ]
 };
 
-function applyRequired(modalContent) {
-    // Only consider visible dependent fields inside Check Out Section
-    modalContent.find('.dependent-field:visible').each(function () {
-        const container = $(this);
-        const input = container.find('input, select, textarea');
+const modalContent = $('#modalBodyContent');
 
-        // Set required if visible
-        input.prop('required', true);
-    });
-
-    // Remove required from hidden fields
-    modalContent.find('.dependent-field:hidden').each(function () {
-        const container = $(this);
-        const input = container.find('input, select, textarea');
-        input.prop('required', false);
-    });
-}
-
-
-function applyDependencies(modalContent, data) {
-    function hideWithChildren(fieldName) {
-        modalContent.find(`.dependent-field[data-depends-on="${fieldName}"]`).each(function () {
-            const child = $(this);
-            child.hide();
-            child.find('input, select, textarea').val('');
-            hideWithChildren(child.data('field')); // recursively hide children
-        });
-    }
-
+function toggleStatusSection() {
     const checkedOutVal = $("#checkedOut").val();
 
-    modalContent.find('.dependent-field').each(function () {
-        const container = $(this);
-        const field = container.data('field');
-        const dependsOn = container.data('depends-on');
-        const showWhen = container.data('show-when');
-
-        if (container.closest('[data-subcategory]').length > 0 && checkedOutVal !== "Yes") {
-            container.hide();
-            container.find('input, select, textarea').val('');
-            hideWithChildren(field);
-            return;
-        }
-
-        if (!dependsOn) {
-            container.show();
-            return;
-        }
-
-        const dependsVal = data[dependsOn] || modalContent.find(`[name="${dependsOn}"]`).val();
-
-        if (showWhen.includes(dependsVal)) {
-            container.show();
-        } else {
-            container.hide();
-            container.find('input, select, textarea').val('');
-            hideWithChildren(field);
-        }
-    });
-
-    // 🔹 Hide sub-category headers if all fields are hidden
-    modalContent.find('.subcategory-header').each(function () {
-        const header = $(this);
-        const subCategory = header.text();
-        const allFields = modalContent.find(`.row[data-subcategory="${subCategory}"] .dependent-field`);
-        const anyVisible = allFields.filter(':visible').length > 0;
-
-        if (anyVisible) {
-            header.show();
-            header.next('hr').show(); // show the hr
-        } else {
-            header.hide();
-            header.next('hr').hide(); // hide the hr
-        }
-    });
-
-    applyRequired(modalContent);
+    if (checkedOutVal && checkedOutVal.toString().trim().toLowerCase() === "yes") {
+        $("#status-section-heading").show();
+        $("#status-section-div").show();
+    } else {
+        $("#status-section-heading").hide();
+        $("#status-section-div").hide();
+    }
 }
 
+// Bind to change event
 $("#checkedOut").on("change", function () {
-    const val = $(this).val();
-    //if (val === "Yes") {
-    //    // Set Vital Status explicitly
-    //    $('[name="Vitals Status"]').val("Completed");
-    //} else {
-    //    // Clear Vital Status
-    //    $('[name="Vitals Status"]').val("");
-    //}
-
-    // Re-evaluate dependencies and required
-    applyDependencies($("#modalBodyContent"), {});
+    toggleStatusSection();
 });
 
-const modalContent = $('#modalBodyContent');
 
 function populateModalForEdit(data) {
     modalContent.empty(); // Clear previous content
     let textColor = 'style="color: black;"'; // Set text color to black
     const fieldsPerRow = 5; // Set to 5 fields per row now
-
+    
     for (const [categoryName, categoryKeys] of Object.entries(categories)) {
-        if (categoryName !== 'Check In Out Information') {
-            modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
-        }
-        if (categoryName === "Check Out Section") {
-            for (const [subCategory, rows] of Object.entries(categoryKeys)) {
-                // Sub-category heading
-                modalContent.append(`<h5 class="subcategory-header">${subCategory}</h5><hr/>`);
 
-                // Each row is an array of field objects
-                rows.forEach(rowFields => {
-                    let rowHtml = `<div class="row" data-subcategory="${subCategory}">`;
+        if (categoryName === "Status") {
+            if (window.isCheckInOutPage === true && window.userType === "client") {
 
-                    rowFields.forEach(fieldObj => {
-                        const key = fieldObj.field;
-                        const value = data[key] || '';
-                        let inputHtml = '';
-                        let disabled = readOnlyFieldsForEdit.includes(key) ? 'disabled' : '';
-                        let minLengthAttr = lengthConstraints[key]?.min ? `minlength="${lengthConstraints[key].min}"` : '';
+                // Create container for Status section
+                const statusContainer = $(`
+            <div id="statusContainer">
+                <h5 class="category-header">Status</h5>
+                <hr/>
+                <div class="row" id="statusSection"></div>
+            </div>
+        `);
+                modalContent.append(statusContainer);
 
-                        if (dropdownFieldsForEdit.includes(key)) {
-                            const dropdownOptions = dropdownOptionsMapping[key] || [
-                                { value: "", label: "" },
-                                { value: "Completed", label: "Completed" },
-                                { value: "Not Completed", label: "Not Completed" }
-                            ];
+                function renderStatusFields() {
+                    const statusSection = $('#statusSection');
+                    statusSection.empty(); // Clear previous fields
 
-                            let optionsHtml = dropdownOptions.map(option =>
-                                `<option value="${option.value}" ${value === option.value ? 'selected' : ''}>${option.label}</option>`
-                            ).join('');
+                    //const checkedOutVal = $("#checkedOut").val();
+                    //if (checkedOutVal !== "Yes") {
+                    //    statusContainer.hide();
+                    //    return;
+                    //} else {
+                    //    statusContainer.show();
+                    //}
 
+                    let inputCount = 0;
+                    for (const statusFieldObj of categories["Status"]) {
+                        const statusField = statusFieldObj.name;
+                        const controllingField = statusFieldObj.dependsOn;
 
-                            inputHtml = `
-                            <div class="col-md-3 dependent-field" 
-                                 data-field="${key}" 
-                                 data-depends-on="${fieldObj.dependsOn || ''}" 
-                                 data-show-when='${JSON.stringify(fieldObj.showWhen || [])}'>
-                              <div class="form-group">
-                                <label>${key}</label>
-                                <select class="form-control" name="${key}" ${disabled} ${textColor}>
-                                  ${optionsHtml}
-                                </select>
-                              </div>
-                            </div>`;
+                        const controllingValue = data?.[controllingField];
+                        if (controllingValue && controllingValue.toUpperCase() === "NEEDED") {
+                            const valueToShow = data?.[statusField] || "";
+                            const inputHtml = `
+                        <div class="form-group col-lg-2">
+                            <label>${statusField}</label>
+                            <input type="text" class="form-control" name="${statusField}" value="${valueToShow}" readonly style="color:black;" />
+                        </div>
+                    `;
+                            statusSection.append(inputHtml);
+                            inputCount++;
+
+                            if (inputCount % 5 === 0) statusSection.append('</div><div class="row">');
                         }
-                        else {
-                            // 🔹 Textbox logic (still uses rule engine)
-                            inputHtml = `
-                            <div class="col-md-3 dependent-field"
-                                 data-field="${key}"
-                                 data-depends-on="${fieldObj.dependsOn || ''}"
-                                 data-show-when='${JSON.stringify(fieldObj.showWhen || [])}'>
-                                <div class="form-group">
-                                    <label>${key}</label>
-                                    <input type="text" class="form-control" name="${key}" value="${value}" ${disabled} ${textColor} ${minLengthAttr}/>
-                                </div>
-                            </div>
-                        `;
+                    }
+
+                    if (inputCount % 5 !== 0) {
+                        const emptyDivsNeeded = 5 - (inputCount % 5);
+                        for (let i = 0; i < emptyDivsNeeded; i++) {
+                            statusSection.append('<div class="form-group col-lg-2"></div>');
                         }
+                    }
+                }
 
-                        rowHtml += inputHtml;
-                    });
-
-                    rowHtml += `</div>`; // close row
-                    modalContent.append(rowHtml);
-                });
+                renderStatusFields();
+                $("#checkedOut").on("change", renderStatusFields);
             }
         }
+
+
         else {
+            if (categoryName !== 'Check In Out Information') {
+                modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+            }
+
             let rowHtml = '<div class="row">';
             let inputCount = 0;
             categoryKeys.forEach((key, index) => {
@@ -823,7 +457,7 @@ function populateModalForEdit(data) {
                                 inputHtml = `
                                                     <div class="form-group col-lg-2">
                                                                 <label>${key}</label>
-                                                                     <input type="text" class="form-control" name="${key}" value="${value}" ${required} readonly ${textColor} />
+                                                                            <input type="text" class="form-control" name="${key}" value="${value}" ${required} readonly ${textColor} />
                                                             </div>`;
 
                             } else {
@@ -1002,31 +636,13 @@ function populateModalForEdit(data) {
             rowHtml += '</div>';
             modalContent.append(rowHtml);
 
+            // Attach input validation listeners to all text fields
+            modalContent.find('input[type="text"]').on('input', function () {
+                const value = $(this).val();
+                validateInput(this, value);
+            });
         }
-        // Attach input validation listeners to all text fields
-        modalContent.find('input[type="text"]').on('input', function () {
-            const value = $(this).val();
-            validateInput(this, value);
-        });
     }
-
-    //Event listner for modal dropdown change to hide/show checkout sections controls
-    modalContent.on('change', 'select', function () {
-        applyDependencies(modalContent, {});
-    });
-
-    //apply rule engine on modal load
-    applyDependencies(modalContent, data);
-
-    //Event listner on Dropdown Check Out Section controls to apply dependencies based on rule engine
-    $("#modalBodyContent").on('change', '.dependent-field select', function () {
-        applyDependencies($("#modalBodyContent"), {});
-    });
-
-    //Event listner on Textbox Check Out Section controls to apply dependencies based on rule engine
-    $("#modalBodyContent").on('input', '.dependent-field input[type="text"]', function () {
-        applyDependencies($("#modalBodyContent"), {});
-    });
 
     // After modal is populated, bind the event listener to the DOB field
     const dobField = modalContent.find('input[name="DOB"]');
@@ -1114,75 +730,73 @@ function populateModalForAdd(data) {
     const fieldsPerRow = 5; // Set to 5 fields per row now
 
     for (const [categoryName, categoryKeys] of Object.entries(categories)) {
-        if (categoryName !== 'Check In Out Information') {
-            modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
-        }
+        if (categoryName === "Status") {
+            if (window.isCheckInOutPage === true && window.userType === "client") {
 
-        if (categoryName === "Check Out Section") {
-            for (const [subCategory, rows] of Object.entries(categoryKeys)) {
-                // Sub-category heading
-                modalContent.append(`<h5 class="subcategory-header">${subCategory}</h5><hr/>`);
+                // Container for Status section
+                const statusContainer = $(`
+            <div id="statusContainer">
+                <h5 class="category-header">Status</h5>
+                <hr/>
+                <div class="row" id="statusSection"></div>
+            </div>
+        `);
+                modalContent.append(statusContainer);
 
-                // Each row is an array of field objects
-                rows.forEach(rowFields => {
-                    let rowHtml = `<div class="row" data-subcategory="${subCategory}">`;
+                function renderStatusFields() {
+                    const statusSection = $('#statusSection');
+                    statusSection.empty();
 
-                    rowFields.forEach(fieldObj => {
-                        const key = fieldObj.field;
-                        const value = data[key] || '';
-                        let inputHtml = '';
-                        let disabled = readOnlyFieldsForAdd.includes(key) ? 'disabled' : '';
-                        let minLengthAttr = lengthConstraints[key]?.min ? `minlength="${lengthConstraints[key].min}"` : '';
+                    //const checkedOutVal = $("#checkedOut").val();
+                    //if (checkedOutVal !== "Yes") {
+                    //    statusContainer.hide();
+                    //    return;
+                    //} else {
+                    //    statusContainer.show();
+                    //}
 
-                        if (dropdownFieldsForAdd.includes(key)) {
-                            const dropdownOptions = dropdownOptionsMapping[key] || [
-                                { value: "", label: "" },
-                                { value: "Completed", label: "Completed" },
-                                { value: "Not Completed", label: "Not Completed" }
-                            ];
+                    let inputCount = 0;
+                    for (const statusFieldObj of categories["Status"]) {
+                        const statusField = statusFieldObj.name;
+                        const controllingField = statusFieldObj.dependsOn;
 
-                            let optionsHtml = dropdownOptions.map(option =>
-                                `<option value="${option.value}" ${value === option.value ? 'selected' : ''}>${option.label}</option>`
-                            ).join('');
+                        // Get value from control (Add mode) instead of data object
+                        const controllingValue = $(`[name="${controllingField}"]`).val();
+                        if (controllingValue && controllingValue.toUpperCase() === "NEEDED") {
+                            const valueToShow = "Pending"; // Always Pending in Add mode
+                            const inputHtml = `
+                        <div class="form-group col-lg-2">
+                            <label>${statusField}</label>
+                            <input type="text" class="form-control" name="${statusField}" value="${valueToShow}" readonly style="color:black;" />
+                        </div>
+                    `;
+                            statusSection.append(inputHtml);
+                            inputCount++;
 
-
-                            inputHtml = `
-                            <div class="col-md-3 dependent-field" 
-                                 data-field="${key}" 
-                                 data-depends-on="${fieldObj.dependsOn || ''}" 
-                                 data-show-when='${JSON.stringify(fieldObj.showWhen || [])}'>
-                              <div class="form-group">
-                                <label>${key}</label>
-                                <select class="form-control" name="${key}" ${disabled} ${textColor}>
-                                  ${optionsHtml}
-                                </select>
-                              </div>
-                            </div>`;
+                            if (inputCount % 5 === 0) statusSection.append('</div><div class="row">');
                         }
-                        else {
-                            // 🔹 Textbox logic (still uses rule engine)
-                            inputHtml = `
-                            <div class="col-md-3 dependent-field"
-                                 data-field="${key}"
-                                 data-depends-on="${fieldObj.dependsOn || ''}"
-                                 data-show-when='${JSON.stringify(fieldObj.showWhen || [])}'>
-                                <div class="form-group">
-                                    <label>${key}</label>
-                                    <input type="text" class="form-control" name="${key}" value="${value}" ${disabled} ${textColor} ${minLengthAttr}/>
-                                </div>
-                            </div>
-                        `;
+                    }
+
+                    if (inputCount % 5 !== 0) {
+                        const emptyDivsNeeded = 5 - (inputCount % 5);
+                        for (let i = 0; i < emptyDivsNeeded; i++) {
+                            statusSection.append('<div class="form-group col-lg-2"></div>');
                         }
+                    }
+                }
 
-                        rowHtml += inputHtml;
-                    });
-
-                    rowHtml += `</div>`; // close row
-                    modalContent.append(rowHtml);
-                });
+                renderStatusFields();
+                $("#checkedOut").on("change", renderStatusFields);
             }
         }
+
+
+
         else {
+            if (categoryName !== 'Check In Out Information') {
+                modalContent.append(`<h5 class="category-header">${categoryName}</h5><hr/>`);
+            }
+
             let rowHtml = '<div class="row">';
             let inputCount = 0;
             categoryKeys.forEach((key, index) => {
@@ -1333,33 +947,13 @@ function populateModalForAdd(data) {
             rowHtml += '</div>';
             modalContent.append(rowHtml);
 
-            
+            // Attach input validation listeners to all text fields
+            modalContent.find('input[type="text"]').on('input', function () {
+                const value = $(this).val();
+                validateInput(this, value);
+            });
         }
-
-        // Attach input validation listeners to all text fields
-        modalContent.find('input[type="text"]').on('input', function () {
-            const value = $(this).val();
-            validateInput(this, value);
-        });
     }
-
-    //Event listner for modal dropdown change to hide/show checkout sections controls
-    modalContent.on('change', 'select', function () {
-        applyDependencies(modalContent, {});
-    });
-
-    //apply rule engine on modal load
-    applyDependencies(modalContent, data);
-
-    //Event listner on Dropdown Check Out Section controls to apply dependencies based on rule engine
-    $("#modalBodyContent").on('change', '.dependent-field select', function () {
-        applyDependencies($("#modalBodyContent"), {});
-    });
-
-    //Event listner on Textbox Check Out Section controls to apply dependencies based on rule engine
-    $("#modalBodyContent").on('input', '.dependent-field input[type="text"]', function () {
-        applyDependencies($("#modalBodyContent"), {});
-    });
 
     checkLabRequisitionField();
     checkLabNeededField();
@@ -1367,13 +961,10 @@ function populateModalForAdd(data) {
 
     // After modal is populated, bind the event listener to the Dental Needed field
     const dentalNeededField = modalContent.find('select[name="Dental Needed"]');
-    debugger;
     if (dentalNeededField.length > 0) {
         dentalNeededField.on('change', function () {
-            debugger;
             const dentalNeededValue = $(this).val();
             if (dentalNeededValue) {
-                debugger;
                 handleBWXNeededLogicOnDentalNeeded(dentalNeededValue)
             }
         });
@@ -1466,7 +1057,6 @@ function populateModalForAdd(data) {
 }
 
 function handleBWXNeededLogicOnDentalNeeded(dentalNeededValue) {
-    debugger;
     const bwxNeeded = document.querySelector('[name="BWX Needed"]');
 
     if (!bwxNeeded) return;
@@ -1723,6 +1313,7 @@ function validateInput(field, value) {
             $(field).val(cleanedValue);
         }
 
+
         if (rules.format) {
             value = value.replace(/\D/g, ""); // Remove non-numeric characters
 
@@ -1751,8 +1342,6 @@ $(document).on('change', '#checkedIn', function () {
     } else {
         $('#checkedOut').prop('disabled', true).val('No'); // Reset value to No when disabled
     }
-
-    applyDependencies($("#modalBodyContent"), {});
 });
 
 function isValidDate(dateString) {
@@ -1793,14 +1382,11 @@ function AdjustWidth() {
 
 /*let walkInSmCount = 0;*/
 async function saveChangesButton() {
-    
+
     const modalInputs = $('#editModal').find('input, select, textarea');
     const updatedData = {};
-    /*const requiredFields = ['LAST NAME', 'FIRST NAME', 'FULL NAME', 'FULL SSN', 'DOD ID', 'DOB', 'TaskForce', 'SEX'];*/
-    //const requiredFields = [];
 
-    if (window.isCheckInOutPage)
-    {
+    if (window.isCheckInOutPage) {
         const checkedInDropdown = document.getElementById("checkedIn");
         const checkedOutDropdown = document.getElementById("checkedOut");
 
@@ -1856,6 +1442,8 @@ async function saveChangesButton() {
             }
             hasError = true;
         }
+
+        
     });
 
     // If any required field is missing, do not proceed further
@@ -1879,7 +1467,6 @@ async function saveChangesButton() {
     }
 
     const shouldPrint = await showYesNoModal("Would you like to print Service Routing Sheet?");
-
     let smIdToIdentifyRecordForPrint = null;
     if (isAddingNewRow) {
         // Initialize a full row with empty values
@@ -1895,6 +1482,9 @@ async function saveChangesButton() {
             const updatedLast4 = fullSsnValue.slice(-4);
             fullRowData[last4Index] = updatedLast4;
         }
+
+
+
 
         // Fill in only the known fields using tableToKeysIndexMap
         tableToKeysIndexMap.forEach((keyIndex, modalIndex) => {
@@ -1962,15 +1552,45 @@ async function saveChangesButton() {
 
         fullRowData[barcodeIndex] = finalBarcodeValue;
 
+        if (window.userType === "client") {
+            const dtoObject = prepareObjectToAddRecordInDatabase(fullRowData, keys);
 
-        $('#previewTable').DataTable().row.add(fullRowData).draw(false);
+            const result = await addSingleRecordInDatabase('/ExcelFileUploader/InsertSingleRecord', dtoObject);
 
-        if (window.isCheckInOutPage) {
-            walkInServiceMemberCount++;
+            if (result.success) {
+                
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.data.message || 'Record inserted successfully',
+                    timer: 200,
+                    showConfirmButton: false
+                });
+
+                $('#editModal').modal('hide');
+                smIdToIdentifyRecordForPrint = result.data.data.smId;
+                await fetchAndRenderEventData(async () => {
+                    await printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrint);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.status === 500 ? 'Server Error' : 'Network Error',
+                    text: result.data?.message || result.error?.message || 'Something went wrong.'
+                });
+            }
+        } else {
+            $('#editModal').modal('hide');
+            $('#previewTable').DataTable().row.add(fullRowData).draw(false);
+            await printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrint);
         }
+
+        //if (window.isCheckInOutPage) {
+        //    //walkInServiceMemberCount++;
+        //}
     }
     else {
-
         if (last4Index !== -1 && fullSsnValue) {
             const updatedLast4 = fullSsnValue.slice(-4);
             updatedData['LAST 4'] = updatedLast4;
@@ -1985,8 +1605,7 @@ async function saveChangesButton() {
         if ($('#checkedIn').val() === "Yes") {
             updatedData['Checked In Time'] = formatDateTime24(new Date());
         }
-        else
-        {
+        else {
             updatedData['Checked In Time'] = "";
         }
 
@@ -2006,54 +1625,88 @@ async function saveChangesButton() {
         //        }
         //    }
         //});
+        if (window.userType === "client") {
+            const dto = prepareObjectToUpdateRecordInDatabase(updatedData, columnMappingsForInsertionAndFetching);
+            const result = await updateSingleRecordInDatabase('/ExcelFileUploader/UpdateSingleRecord', dto);
 
-        keys.forEach((key, index) => {
-            if (key === 'SM ID') {
-                smIdToIdentifyRecordForPrint = currentRow.find('td').eq(keys.indexOf('SM ID')).text().trim();
+            if (result.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.data.message || 'Record updated successfully',
+                    timer: 200,
+                    showConfirmButton: false
+                });
+                $('#editModal').modal('hide');
+                smIdToIdentifyRecordForPrint = dto.SmId;
+                await fetchAndRenderEventData(async () => {
+                    await printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrint);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.status === 500 ? 'Server Error' : 'Network Error',
+                    text: result.data?.message || result.error?.message || 'Something went wrong.'
+                });
             }
-            if (updatedData[key] !== undefined) {
-                const currentCellValue = currentRow.find('td').eq(index).text().trim();
 
-                // Skip update if key is Checked In Time or Checked Out Time and already has a value
-                if (
-                    (key === 'Checked In Time' && currentCellValue !== '') || (key === 'Checked Out Time' && currentCellValue !== '')
-                ) {
-                    return; // Skip this iteration
+        }
+        else {
+            keys.forEach((key, index) => {
+                if (key === 'SM ID') {
+                    smIdToIdentifyRecordForPrint = currentRow.find('td').eq(keys.indexOf('SM ID')).text().trim();
                 }
+                if (updatedData[key] !== undefined) {
+                    const currentCellValue = currentRow.find('td').eq(index).text().trim();
 
-                // Always update for these keys or if value is non-empty
-                if (
-                    key === 'ABO' || key === 'Checked In By' || key === 'Checked Out By' || updatedData[key].trim() !== ''
-                ) {
-                    currentRow.find('td').eq(index).text(updatedData[key]);
+                    // Skip update if key is Checked In Time or Checked Out Time and already has a value
+                    if (
+                        (key === 'Checked In Time' && currentCellValue !== '') || (key === 'Checked Out Time' && currentCellValue !== '')
+                    ) {
+                        return; // Skip this iteration
+                    }
+
+                    // Always update for these keys or if value is non-empty
+                    if (
+                        key === 'ABO' || key === 'Checked In By' || key === 'Checked Out By' || updatedData[key].trim() !== ''
+                    ) {
+                        currentRow.find('td').eq(index).text(updatedData[key]);
+                    }
                 }
-            }
-        });
+            });
 
-
+            $('#editModal').modal('hide');
+            await printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrint);
+        }
     }
 
     AdjustWidth();
     isAddingNewRow = false;
-   
-    $('#editModal').modal('hide');
 
-    if (window.isCheckInOutPage) {
+    /*$('#editModal').modal('hide');*/
+
+    if (window.isCheckInOutPage && window.userType !== "client") {
         RenderUpdatedEventSummaryTable();
 
-        UpdateExcelFile();
+        //UpdateExcelFile();
     }
+}
 
-    if (shouldPrint) {
-        $('#previewTable tbody tr').each(async function () {
-            const smId = $(this).find('td').eq(keys.indexOf('SM ID')).text().trim();
-            if (smId === smIdToIdentifyRecordForPrint) {
-                const row = $(this); // No need for .closest("tr")
-                const rowData = getRowData(row);
-                await generatePDF([rowData], true);
-                return false; // break the loop
-            }
-        });
+async function printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrint) {
+    if (!shouldPrint) return;
+    const table = $('#previewTable').DataTable();
+    const rows = table.rows().nodes().toArray(); // get all row DOM nodes
+
+    for (let row of rows) {
+        const $row = $(row);
+        const data = table.row($row).data(); // get data for this row
+        const smId = data[keys.indexOf('SM ID')];
+
+        if (smId == smIdToIdentifyRecordForPrint) {
+            const rowData = getRowData($row);
+            await generatePDF([rowData], true);
+            break; // stop looping after printing
+        }
     }
 }
 
@@ -2126,10 +1779,23 @@ const { jsPDF } = window.jspdf;
 
 // 📌 Print Single Row
 $(document).on("click", ".btn-print", async function () {
-    var row = $(this).closest("tr");
-    var rowData = getRowData(row);
-    await generatePDF([rowData], true);  // Print mode
+    var $btn = $(this);
+    $btn.prop("disabled", true); // Disable button
+    $('#loader').removeClass('d-none'); // Show loader if you have one
+
+    try {
+        var row = $btn.closest("tr");
+        var rowData = getRowData(row);
+        await generatePDF([rowData], true);  // Print mode
+    } catch (err) {
+        console.error("Error generating PDF:", err);
+        alert("Failed to generate PDF. Please try again.");
+    } finally {
+        $btn.prop("disabled", false); // Re-enable button
+        $('#loader').addClass('d-none'); // Hide loader
+    }
 });
+
 
 $("#btnDownloadPDF").click(async function () {
     var allRowsData = [];
@@ -2224,7 +1890,11 @@ function getColumnIndex(table, columnName) {
     return index;
 }
 
-document.getElementById('addRowButton').addEventListener('click', function () {
+//document.getElementById('addRowButtonC').addEventListener('click', function () {
+//    addRow();
+//});
+
+$(document).on('click', '.add-row-button', function () {
     addRow();
 });
 
@@ -2246,7 +1916,6 @@ function handleColumnsRelatedToDob(dob) {
     let today;
 
     if (window.isCheckInOutPage) {
-        debugger;
         //var table = $('#previewTable').DataTable();
         //today = new Date(table.row(0).data()[65]);
         const table = $('#previewTable').DataTable();
@@ -2297,7 +1966,6 @@ function handleColumnsRelatedToDob(dob) {
     const ekgNeededField = document.querySelector('[name="EKG NEEDED"]');
     const framinghamField = document.querySelector('[name="Framingham"]');
 
-    debugger;
 
     if (isAddingNewRow || window.isCheckInOutPage) {
         const valueForAge = exactAge > 39.5 ? "NEEDED" : "N/A";
@@ -2438,7 +2106,6 @@ async function generatePDF(dataArray = [], isPrintMode = false) {
 
         // Labs Start
         if ((data.labNeeded || '').toLowerCase() === 'needed') {
-            debugger;
             y = drawLabsSection(doc, data, fontStyle, headingFontSize, fieldsFontSize, headingFirstColumnX, fieldsFirstColumnX, fieldsSecondColumnX, lineStartX, lineEndX, y, distanceInLines);
         }
 
@@ -2486,7 +2153,7 @@ async function generatePDF(dataArray = [], isPrintMode = false) {
 
         y += 10;
 
-        
+
 
         const pageHeight = doc.internal.pageSize.getHeight();
         const imgWidth = 60;
@@ -2606,12 +2273,12 @@ function drawVitalsSection(doc, data, fontStyle, headingFontSize, fieldsFontSize
     y += distanceInLines;
     doc.setFont(fontStyle, "normal");
     drawCheckbox(doc, fieldsFirstColumnX, y, fieldsFontSize, 'Height/Weight');
-   
+
 
     if ((data.dentalNeeded || '').toLowerCase() === 'needed' || (data.phaNeeded || '').toLowerCase() === 'needed') {
         drawCheckbox(doc, fieldsSecondColumnX, y, fieldsFontSize, 'Blood Pressure');
     }
-    
+
 
     y += 8;
     doc.setLineDashPattern([1, 1], 0);
@@ -2648,7 +2315,6 @@ function drawLabsSection(doc, data, fontStyle, headingFontSize, fieldsFontSize, 
     doc.setFontSize(fieldsFontSize);
     doc.setFont(fontStyle, "normal");
 
-    debugger;
     // Step 1: Build array of only the needed items
     const labs = [];
     if ((data.hiv || '').toLowerCase() === 'needed') labs.push("HIV");
@@ -2786,6 +2452,8 @@ function drawPhaSection(doc, fontStyle, headingFontSize, fieldsFontSize, heading
 }
 
 ////////////////////////////////////////////////////////////Routing Sheet Methods End////////////////////////////////////////////////////////////////////
+
+
 function showYesNoModal(message = "Are you sure?") {
     return new Promise((resolve) => {
         const modalElement = document.getElementById("yesNoModal");
@@ -2819,3 +2487,272 @@ function showYesNoModal(message = "Are you sure?") {
     });
 }
 
+const columnMappingsForInsertionAndFetching = [
+    { key: "SmId", label: "SM ID", type: "int" },
+    { key: "FullName", label: "FULL NAME", type: "string" },
+    { key: "FullSsn", label: "FULL SSN", type: "string" },
+    { key: "Last4", label: "LAST 4", type: "string" },
+    { key: "DodId", label: "DOD ID", type: "string" },
+    { key: "Rank", label: "RANK", type: "string" },
+    { key: "Age", label: "AGE", type: "int" },
+    { key: "Sex", label: "SEX", type: "string" },
+    { key: "Mos", label: "MOS", type: "string" },
+    { key: "Agr", label: "AGR", type: "string" },
+    { key: "Uic", label: "UIC", type: "string" },
+    { key: "Mrc", label: "MRC", type: "string" },
+    { key: "Dob", label: "DOB", type: "string" },
+    { key: "Over40", label: "OVER 40", type: "string" },
+    { key: "DentalDue", label: "Dental Due", type: "string" },
+    { key: "DentalExam", label: "Dental Exam", type: "string" },
+    { key: "DentalNeeded", label: "Dental Needed", type: "string" },
+    { key: "PanoNeeded", label: "PANO Needed", type: "string" },
+    { key: "BwxNeeded", label: "BWX Needed", type: "string" },
+    { key: "Drc", label: "DRC", type: "string" },
+    { key: "PhaDate", label: "PHA Date", type: "string" },
+    { key: "PhaDue", label: "PHA Due", type: "string" },
+    { key: "Pha", label: "PHA Needed", type: "string" },
+    { key: "Pulhes", label: "PULHES", type: "string" },
+    { key: "VisionDate", label: "Vision Date", type: "string" },
+    { key: "Vision", label: "VISION Needed", type: "string" },
+    { key: "NearVision", label: "NEAR VISION Needed", type: "string" },
+    { key: "Vrc", label: "VRC", type: "string" },
+    { key: "Vision2pg", label: "Vision 2PG", type: "string" },
+    { key: "Vision1mi", label: "Vision Mask Insert", type: "string" },
+    { key: "HearingDate", label: "Hearing Date", type: "string" },
+    { key: "Hearing", label: "HEARING Needed", type: "string" },
+    { key: "Hrc", label: "HRC", type: "string" },
+    { key: "HearingProfile", label: "Hearing Profile", type: "string" },
+    { key: "Quest", label: "Lab Requisition", type: "string" },
+    { key: "LabNeeded", label: "Lab Needed", type: "string" },
+    { key: "Abo", label: "ABO", type: "string" },
+    { key: "AboNeeded", label: "ABO Needed", type: "string" },
+    { key: "Dna", label: "DNA", type: "string" },
+    { key: "SickleDate", label: "Sickle Date", type: "string" },
+    { key: "Sickle", label: "SICKLE", type: "string" },
+    { key: "G6pd", label: "G6PD", type: "string" },
+    { key: "G6pdDate", label: "G6PD Date", type: "string" },
+    { key: "G6pdStatus", label: "G6PD Status", type: "string" },
+    { key: "HivNextTestDate", label: "HIV NEXT TEST DATE", type: "string" },
+    { key: "Hiv", label: "HIV", type: "string" },
+    { key: "LipidNeeded", label: "Lipid Needed", type: "string" },
+    { key: "LipidPanel", label: "LIPID PANEL", type: "string" },
+    { key: "CholesterolHdlCholesterol", label: "Cholesterol / HDL Cholesterol", type: "string" },
+    { key: "Framingham", label: "Framingham", type: "string" },
+    { key: "Ekg", label: "EKG (Date)", type: "string" },
+    { key: "EkgNeeded", label: "EKG NEEDED", type: "string" },
+    { key: "PregnancyTestNeeded", label: "Pregnancy Test Needed", type: "string" },
+    { key: "Imm", label: "IMM Needed", type: "string" },
+    { key: "HepB", label: "Hep B Needed", type: "string" },
+    { key: "HepA", label: "Hep A Needed", type: "string" },
+    { key: "Flu", label: "FLU Needed", type: "string" },
+    { key: "TetTdp", label: "Tet/TDP Needed", type: "string" },
+    { key: "Mmr", label: "MMR Needed", type: "string" },
+    { key: "Varicella", label: "Varicella Needed", type: "string" },
+    { key: "TaskForce", label: "TaskForce", type: "string" },
+    { key: "Notes", label: "Notes", type: "string" },
+    { key: "Over44", label: "Over 44", type: "string" },
+    { key: "EventDate", label: "EventDate", type: "string" },
+    { key: "EventEndDate", label: "Event End Date", type: "string" },
+    { key: "EventId", label: "EventID", type: "string" },
+    { key: "VisionWin", label: "Vision Win", type: "int" },
+    { key: "DentalWin", label: "Dental Win", type: "int" },
+    { key: "PhaWin", label: "PHA Win", type: "int" },
+    { key: "HivWin", label: "HIV Win", type: "int" },
+    { key: "HearingWin", label: "Hearing WIN", type: "int" },
+    { key: "Barcode", label: "Barcode", type: "string" },
+    { key: "CheckIn", label: "Checked In", type: "string" },
+    { key: "CheckOut", label: "Checked Out", type: "string" },
+    { key: "CheckInBy", label: "Checked In By", type: "string" },
+    { key: "CheckOutBy", label: "Checked Out By", type: "string" },
+    { key: "CheckInTime", label: "Checked In Time", type: "date" },
+    { key: "CheckOutTime", label: "Checked Out Time", type: "date" },
+    { key: "WalkInServiceMember", label: "Walk-In Service Member", type: "string" }
+];
+
+const statusPreviewColumns = [
+    {
+        label: "IMM Needed Status",
+        getValue: (row) => row.ImmunizationRecord?.Status ?? "Pending"
+    },
+    {
+        label: "Labs Needed Status",
+        getValue: (row) => row.LabRecord?.Status ?? "Pending"
+    },
+    {
+        label: "PHA Needed Status",
+        getValue: (row) => row.PhaRecord?.Status ?? "Pending"
+    },
+    {
+        label: "Audiologist Needed Status",
+        getValue: (row) => row.AudiologistRecord?.Status ?? "Pending"
+    },
+    {
+        label: "Vision Needed Status",
+        getValue: (row) => row.VisionRecord?.Status ?? "Pending"
+    },
+    {
+        label: "Dental Needed Status",
+        getValue: (row) => row.DentalRecord?.Status ?? "Pending"
+    }
+];
+
+
+
+function submitData() {
+    $('#loader').removeClass('d-none');
+    let tableRows = [];
+
+    $('#previewTable tbody tr').each(function () {
+        let $cells = $(this).find('td');
+        let row = {};
+
+        columnMappingsForInsertionAndFetching.forEach(mapping => {
+            let value = getCellValue($cells, mapping.label);
+            switch (mapping.type) {
+                case "int":
+                    row[mapping.key] = parseInt(value) || 0;
+                    break;
+                case "float":
+                    row[mapping.key] = parseFloat(value) || 0.0;
+                    break;
+                case "date":
+                    // Handle empty string or invalid date
+                    if (!value) {
+                        row[mapping.key] = null;
+                    } else {
+                        let parsedDate = new Date(value);
+
+                        // If invalid date, fallback to null
+                        if (isNaN(parsedDate.getTime())) {
+                            row[mapping.key] = null;
+                        } else {
+                            // Format as ISO string (PostgreSQL-compatible)
+                            row[mapping.key] = parsedDate.toISOString(); // e.g., "2025-07-14T10:30:00.000Z"
+                        }
+                    }
+                    break;
+                default: // string or unknown
+                    row[mapping.key] = value;
+                    break;
+            }
+        });
+
+        row["isDeleted"] = false; // always false when inserting
+        tableRows.push(row);
+    });
+
+    let eventId = null;
+
+    if (window.isCheckInOutPage === true) {
+        const firstRow = $('#previewTable tbody tr:first');
+        const $cells = firstRow.find('td');
+        eventId = getCellValue($cells, "EventID");
+
+    }
+    else {
+        eventId = document.getElementById('eventId').value;
+    }
+
+    $.ajax({
+        url: '/Home/CheckForExistingDataAgainstEventId',
+        type: 'POST',
+        data: JSON.stringify(eventId),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if (response.success) {
+                submitDataToDatabase(tableRows, eventId);
+            } else {
+                Swal.fire({
+                    title: 'Data Exists!',
+                    text: 'Data already exists for this Event ID. Do you want to overwrite it?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, overwrite',
+                    cancelButtonText: 'No, cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        submitDataToDatabase(tableRows, eventId);
+                    } else {
+                        Swal.fire('Cancelled', 'No changes were made.', 'info');
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("Error: " + error);
+        },
+        complete: function () {
+            $('#loader').addClass('d-none');
+        }
+    });
+}
+
+function submitDataToDatabase(tableRows, eventId) {
+    const dataToSend = JSON.stringify({
+        Entities: tableRows,
+        EventId: eventId
+    });
+    console.log(dataToSend);
+    $.ajax({
+        url: '/Home/SubmitDataInDatabase',
+        type: 'POST',
+        data: dataToSend,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            Swal.fire({
+                title: response.success ? "Success!" : "Error!",
+                text: response.message,
+                icon: response.success ? "success" : "error",
+                confirmButtonText: "OK"
+            }).then(() => {
+                if (response.success) {
+                    clearPreview();
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                title: "Error!",
+                text: "Something went wrong: " + error,
+                icon: "error",
+                confirmButtonText: "OK"
+            });
+        },
+        complete: function () {
+            $("#clearPreview, #btnDownloadPDF").hide();
+            $('.add-row-button').hide();
+            $('#loader').addClass('d-none');
+        }
+    });
+}
+
+
+function clearPreview() {
+    if ($.fn.DataTable.isDataTable('#previewTable')) {
+        $('#previewTable').DataTable().clear().destroy(); // Clear data and destroy the instance
+    }
+
+    const tableHead = document.querySelector('#previewTable thead');
+    const tableBody = document.querySelector('#previewTable tbody');
+
+    tableHead.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    if (window.isCheckInOutPage === false) {
+        document.getElementById('taskforceInfoContainer').innerHTML = '';
+        document.getElementById('fileValidationErrorContainer').innerHTML = '';
+        document.getElementById('generateExcelButton').classList.add('d-none');
+    }
+    else {
+        $('#eventSummaryTable').addClass('d-none');
+        $('.card.p-3.mb-4').addClass('d-none');
+        $('#excelFile').val('');
+    }
+
+    document.getElementById('submitDataButton').classList.add('d-none');
+    /*document.getElementById('addRowButton').classList.add('d-none');*/
+    smIdCounter = 0;
+    uploadCounter = 0;
+}

@@ -1,31 +1,14 @@
 ﻿@{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml"; // Adjust the path to your layout file if necessary
 }
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-@* <link href="~/css/home.css" rel="stylesheet" /> *@
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
-<script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-<!-- SweetAlert2 -->
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="~/css/site.css" />
 
 
 
 <div class="container-fluid" style="max-width: 100%; padding-top: 0; margin-top: 0;">
     <!-- Calendar Section -->
-    <div class="row my-3">
+    <div class="row mt-4">
         <div class="col-md-12 text-center">
-            <h1 style="color: rgba(80,90,201,1);">Malama</h1>
+            <h1 id="page-heading" class="page-heading">Malama</h1>
         </div>
     </div>
     <div class="row my-3">
@@ -113,10 +96,10 @@
     <form id="fileUploadForm" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="files" multiple accept=".xls,.xlsx" style="display: none;">
         <div class="d-flex justify-content-center my-3">
-            <button type="button" class="btn btn-primary" id="uploadButton">Upload and Preview</button>
+            <button type="button" class="btn btn-general" id="uploadButton">Upload and Preview</button>
         </div>
         <div class="d-flex justify-content-center my-3">
-            <button type="button" class="btn btn-primary" onclick="clearPreview()" id="clearPreview">Clear Preview</button>
+            <button type="button" class="btn btn-general" onclick="clearPreview()" id="clearPreview">Clear Preview</button>
         </div>
     </form>
 
@@ -137,10 +120,11 @@
 
 
     <div class="d-flex justify-content-center my-3 button-container">
-        <button id="addRowButton" class="btn btn-secondary d-none">Add Walk-In Service Member</button>
-        <button id="generateExcelButton" class="btn btn-info d-none">Generate Excel</button>
-        <button id="submitDataButton" class="btn btn-success d-none" onclick="submitData()">Submit Data</button>
-        <button id="btnDownloadPDF" class="btn btn-success d-none">Download Routing Sheets</button>
+        <button class="btn btn-general add-row-button" style="display: none;">Add Walk-In Service Member</button>
+        @* <button id="addRowButton" class="btn btn-secondary">Add Walk-In Service Member</button> *@
+        <button id="generateExcelButton" class="btn btn-general d-none">Generate Excel</button>
+        @* <button id="submitDataButton" class="btn btn-general d-none" onclick="submitData()">Submit Data</button> *@
+        <button id="btnDownloadPDF" class="btn btn-general d-none">Download Routing Sheets</button>
 
 
         @await Html.PartialAsync("_EditModal")
@@ -180,32 +164,14 @@
         <script>
             window.isCheckInOutPage = false;
 
-            
-    $(window).on('resize', function () {
-    $('#previewTable').DataTable().columns.adjust().draw();
-});
+
+            $(window).on('resize', function () {
+                $('#previewTable').DataTable().columns.adjust().draw();
+            });
 
             document.getElementById('clearPreview').addEventListener('click', clearPreview);
 
-            function clearPreview() {
-                if ($.fn.DataTable.isDataTable('#previewTable')) {
-                    $('#previewTable').DataTable().clear().destroy(); // Clear data and destroy the instance
-                }
 
-                const tableHead = document.querySelector('#previewTable thead');
-                const tableBody = document.querySelector('#previewTable tbody');
-
-                tableHead.innerHTML = '';
-                tableBody.innerHTML = '';
-
-                document.getElementById('taskforceInfoContainer').innerHTML = '';
-                document.getElementById('fileValidationErrorContainer').innerHTML = '';
-                document.getElementById('generateExcelButton').classList.add('d-none');
-                document.getElementById('submitDataButton').classList.add('d-none');
-                document.getElementById('addRowButton').classList.add('d-none');
-                smIdCounter = 0;
-                uploadCounter = 0;
-            }
 
 
             document.getElementById('generateExcelButton').addEventListener('click', function () {
@@ -387,11 +353,11 @@
                 table.style.width = 'auto'; // Set width to auto for left alignment
                 const headerRow = document.createElement('tr');
                 headerRow.innerHTML = `
-                                        <th style="text-align:left; padding-right: 200px;">Report</th>
-                                        <th style="text-align:left; padding-right: 40px;">Row No</th>
-                                        <th style="text-align:left; padding-right: 40px;">Column</th>
-                                        <th style="text-align:left;">Error</th>
-                                    `;
+                                                                <th style="text-align:left; padding-right: 200px;">Report</th>
+                                                                <th style="text-align:left; padding-right: 40px;">Row No</th>
+                                                                <th style="text-align:left; padding-right: 40px;">Column</th>
+                                                                <th style="text-align:left;">Error</th>
+                                                            `;
                 table.appendChild(headerRow);
 
                 const hr = document.createElement('hr');
@@ -403,11 +369,11 @@
                 errors.forEach(error => {
                     const errorRow = document.createElement('tr');
                     errorRow.innerHTML = `
-                                            <td>${error.FileName}</td>
-                                            <td>${error.Row}</td>
-                                            <td>${error.Column}</td>
-                                            <td>${error.Error}</td>
-                                        `;
+                                                                    <td>${error.FileName}</td>
+                                                                    <td>${error.Row}</td>
+                                                                    <td>${error.Column}</td>
+                                                                    <td>${error.Error}</td>
+                                                                `;
                     table.appendChild(errorRow);
                 });
 
@@ -480,16 +446,16 @@
                 let totalRows = filteredData.length; // Now counting only the unique rows
                 let taskforceInfoContainer = document.getElementById('taskforceInfoContainer');
                 let tableHtml = `
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Taskforce Name(s)</th>
-                                                            <th>SM Count</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="taskforceBody"></tbody>
-                                                </table>
-                                            `;
+                                                                        <table>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Taskforce Name(s)</th>
+                                                                                    <th>SM Count</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="taskforceBody"></tbody>
+                                                                        </table>
+                                                                    `;
 
                 if (!document.getElementById('taskforceBody')) {
                     taskforceInfoContainer.innerHTML = tableHtml;
@@ -498,9 +464,9 @@
                 let taskforceBody = document.getElementById('taskforceBody');
                 let newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                                                <td>${firstTaskforceValue}</td>
-                                                <td>${totalRows}</td>
-                                            `;
+                                                                        <td>${firstTaskforceValue}</td>
+                                                                        <td>${totalRows}</td>
+                                                                    `;
                 taskforceBody.appendChild(newRow);
 
                 let formattedData = filteredData.map((row, index) => {
@@ -509,12 +475,9 @@
                     let smIdData = [smIdCounter];
                     let fullRowData = smIdData.concat(rowData);
                     fullRowData.unshift(null);
-                    // Add 41 placeholders for the check out section fields
-                    for (let i = 0; i < 42; i++) {
-                        fullRowData.push("");
-                    }
+
                     fullRowData.push("No", "No", "", "", "", "");
-                    
+
                     //let barcodeIndex = Object.keys(row).indexOf("Barcode"); // +1 because SM ID is added at index 0
                     let barcodeIndex = keys.indexOf('Barcode');
                     if (barcodeIndex > 0) {
@@ -547,7 +510,7 @@
                     let headers = Object.keys(filteredData[0]);
                     //fullNameColumnIndex = headers.indexOf("FULL NAME") + 1;
                     headers.unshift('SM ID');
-                    headers.push('Checked Out Time', 'Vitals Status', 'Hep B Needed Status', 'Hep B Reason', 'FLU Needed Status', 'FLU Reason', 'MMR Status', 'MMR Reason', 'Hep A Needed Status', 'Hep A Reason', 'Tet/TDP Needed Status', 'Tet/TDP Reason', 'Varicella Needed Status', 'Varicella Reason', 'SICKLE Status', 'Sickle Reason', 'HIV Status', 'HIV Barcode', 'HIV Reason', 'ABO Status', 'ABO Reason', 'DNA Status', 'DNA Reason', 'G6PD Checkout Status', 'G6PD Reason', 'Lipid Status', 'Lipid Reason', 'EKG Needed Status', 'EKG Needed Reason', 'PHA Status', 'PHA Follow Up', 'Hearing Status', 'Audiologist Service Completed', 'Vision Status', 'Optometrist Service Completed', 'Dental X-Ray Status', 'Panoramic X-Ray', 'Dental Exam Status', 'Class (Dental Exam)', 'Dental Treatment Received', 'Final Dental Class', 'Dental Treatment Reason', 'Final Treatment Class 3 Reason', 'Checked In', 'Checked Out', 'Checked In By', 'Checked Out By', 'Checked In Time');
+                    headers.push('Checked In', 'Checked Out', 'Checked In By', 'Checked Out By', 'Checked In Time', 'Checked Out Time');
                     headers.push('Actions');
                     let headerRowHtml = headers.map(header => `<th style="background-color: rgba(120, 130, 221, 1); color: white;">${header}</th>`).join('');
                     tableHead.innerHTML = `<tr>${headerRowHtml}</tr>`;
@@ -568,9 +531,9 @@
                                 orderable: false,
                                 render: function () {
                                     return `
-                            <button class="btn btn-primary mr-2" onclick="editRow(this)">Edit</button>
-                            <button class="btn mr-2 btn-print">Print</button>
-                        `;
+                                                                 <button class="btn table-action-btn mr-2" onclick="editRow(this)">Edit</button>
+                                                            <button class="btn table-action-btn mr-2 btn-print">Print</button>
+                                                `;
                                 }
                             },
                             { title: 'SM ID', orderable: false },
@@ -578,49 +541,6 @@
                                 title: header,
                                 orderable: (i === fullNameIndexForSorting || i === sexIndexForSorting) // Enable sorting for DT index 2 and 9
                             })),
-                            { title: 'Vitals Status', orderable: false },
-                            { title: 'Hep B Needed Status', orderable: false },
-                            { title: 'Hep B Reason', orderable: false },
-                            { title: 'FLU Needed Status', orderable: false },
-                            { title: 'FLU Reason', orderable: false },
-                            { title: 'MMR Status', orderable: false },
-                            { title: 'MMR Reason', orderable: false },
-                            { title: 'Hep A Needed Status', orderable: false },
-                            { title: 'Hep A Reason', orderable: false },
-                            { title: 'Tet/TDP Needed Status', orderable: false },
-                            { title: 'Tet/TDP Reason', orderable: false },
-                            { title: 'Varicella Needed Status', orderable: false },
-                            { title: 'Varicella Reason', orderable: false },
-                            { title: 'SICKLE Status', orderable: false },
-                            { title: 'Sickle Reason', orderable: false },
-                            { title: 'HIV Status', orderable: false },
-                            { title: 'HIV Barcode', orderable: false },
-                            { title: 'HIV Reason', orderable: false },
-                            { title: 'ABO Status', orderable: false },
-                            { title: 'ABO Reason', orderable: false },
-                            { title: 'DNA Status', orderable: false },
-                            { title: 'DNA Reason', orderable: false },
-                            { title: 'G6PD Checkout Status', orderable: false },
-                            { title: 'G6PD Reason', orderable: false },
-                            { title: 'Lipid Status', orderable: false },
-                            { title: 'Lipid Reason', orderable: false },
-                            { title: 'EKG Needed Status', orderable: false },
-                            { title: 'EKG Needed Reason', orderable: false },
-                            { title: 'PHA Status', orderable: false },
-                            { title: 'PHA Follow Up', orderable: false },
-                            { title: 'Hearing Status', orderable: false },
-                            { title: 'Audiologist Service Completed', orderable: false },
-                            { title: 'Vision Status', orderable: false },
-                            { title: 'Optometrist Service Completed', orderable: false },
-                            { title: 'Dental X-Ray Status', orderable: false },
-                            { title: 'Panoramic X-Ray', orderable: false },
-                            { title: 'Dental Exam Status', orderable: false },
-                            { title: 'Class (Dental Exam)', orderable: false },
-                            { title: 'Dental Treatment Received', orderable: false },
-                            { title: 'Final Dental Class', orderable: false },
-                            { title: 'Final Treatment Class 3 Reason', orderable: false },
-                            { title: 'Dental Treatment Reason', orderable: false },
-
                             { title: 'Checked In', orderable: false },
                             { title: 'Checked Out', orderable: false },
                             { title: 'Checked In By', orderable: false },
@@ -657,9 +577,10 @@
 
                 highlightMissingFullNameRows(missingFullNameRows);
                 document.getElementById('generateExcelButton').classList.remove('d-none');
-                //document.getElementById('submitDataButton').classList.remove('d-none');
+                // document.getElementById('submitDataButton').classList.remove('d-none');
                 document.getElementById('btnDownloadPDF').classList.remove('d-none');
-                document.getElementById('addRowButton').classList.remove('d-none');
+                $('.add-row-button').show();
+                // document.getElementById('addRowButton').classList.remove('d-none');
                 isPreviewDoneSuccessfully = true;
             }
 
@@ -668,201 +589,6 @@
                     let rowIndex = index + 1; // Convert to 1-based index
                     if (missingRows.includes(rowIndex)) {
                         $(this).css('border', '2px solid red'); // Highlight the border of the row
-                    }
-                });
-            }
-
-
-            // function generateNewRowHtml(rowData) {
-            //     let newRowHtml = '<tr>'; // Start a new row
-
-            //     keys.forEach((key, index) => {
-            //         const value = rowData[key] || ''; // Get the value for each key
-            //         newRowHtml += `<td>${value}</td>`; // Add a new cell to the row with the value
-            //     });
-
-            //     newRowHtml += `
-            //         <td>
-            //             <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
-            //         </td>
-            //     `; // Add an edit button at the end of the row
-
-            //     newRowHtml += '</tr>'; // Close the row
-
-            //     return newRowHtml;
-            // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            function submitData() {
-                $('#loader').removeClass('d-none');
-                // Get all data from the DataTable
-                let tableRows = [];
-                $('#previewTable tbody tr').each(function () {
-                    let $cells = $(this).find('td');
-                    let row = {
-                        SmId: parseInt(getCellValue($cells, "SM ID")),
-                        FullName: getCellValue($cells, "FULL NAME"),
-                        // Name: getCellValue($cells, "NAME"),
-                        FullSsn: getCellValue($cells, "FULL SSN"),
-                        Last4: getCellValue($cells, "LAST 4"),
-                        DodId: getCellValue($cells, "DOD ID"),
-                        Rank: getCellValue($cells, "RANK"),
-                        Age: parseInt(getCellValue($cells, "AGE")),
-                        Sex: getCellValue($cells, "SEX"),
-                        Mos: getCellValue($cells, "MOS"),
-                        Agr: getCellValue($cells, "AGR"),
-                        Uic: getCellValue($cells, "UIC"),
-                        Mrc: getCellValue($cells, "MRC"),
-                        Dob: getCellValue($cells, "DOB"),
-                        Over40: getCellValue($cells, "OVER 40"),
-                        DentalDue: getCellValue($cells, "Dental Due"),
-                        DentalExam: getCellValue($cells, "Dental Exam"),
-                        DentalNeeded: getCellValue($cells, "Dental Needed"),
-                        PanoNeeded: getCellValue($cells, "PANO Needed"),
-                        BwxNeeded: getCellValue($cells, "BWX Needed"),
-                        Drc: getCellValue($cells, "DRC"),
-                        PhaDate: getCellValue($cells, "PHA Date"),
-                        PhaDue: getCellValue($cells, "PHA Due"),
-                        Pha: getCellValue($cells, "PHA Needed"),
-                        Pulhes: getCellValue($cells, "PULHES"),
-                        VisionDate: getCellValue($cells, "Vision Date"),
-                        Vision: getCellValue($cells, "VISION Needed"),
-                        NearVision: getCellValue($cells, "NEAR VISION Needed"),
-                        Vrc: getCellValue($cells, "VRC"),
-                        Vision2pg: getCellValue($cells, "Vision 2PG"),
-                        Vision1mi: getCellValue($cells, "Vision Mask Insert"),
-                        HearingDate: getCellValue($cells, "Hearing Date"),
-                        Hearing: getCellValue($cells, "HEARING Needed"),
-                        Hrc: getCellValue($cells, "HRC"),
-                        HearingProfile: getCellValue($cells, "Hearing Profile"),
-                        Quest: getCellValue($cells, "Lab Requisition"),
-                        LabNeeded: getCellValue($cells, "Lab Needed"),
-                        Abo: getCellValue($cells, "ABO"),
-                        AboNeeded: getCellValue($cells, "ABO Needed"),
-                        Dna: getCellValue($cells, "DNA"),
-                        SickleDate: getCellValue($cells, "Sickle Date"),
-                        Sickle: getCellValue($cells, "SICKLE"),
-                        G6pd: getCellValue($cells, "G6PD"),
-                        G6pdDate: getCellValue($cells, "G6PD Date"),
-                        G6pdStatus: getCellValue($cells, "G6PD Status"),
-                        HivNextTestDate: getCellValue($cells, "HIV NEXT TEST DATE"),
-                        Hiv: getCellValue($cells, "HIV"),
-                        LipidNeeded: getCellValue($cells, "Lipid Needed"),
-                        LipidPanel: getCellValue($cells, "LIPID PANEL"),
-                        CholesterolHdlCholesterol: getCellValue($cells, "Cholesterol / HDL Cholesterol"),
-                        Framingham: getCellValue($cells, "Framingham"),
-                        Ekg: getCellValue($cells, "EKG (Date)"),
-                        EkgNeeded: getCellValue($cells, "EKG NEEDED"),
-                        PregnancyTestNeeded: getCellValue($cells, "Pregnancy Test Needed"),
-                        Imm: getCellValue($cells, "IMM Needed"),
-                        HepB: getCellValue($cells, "Hep B Needed"),
-                        HepA: getCellValue($cells, "Hep A Needed"),
-                        Flu: getCellValue($cells, "FLU Needed"),
-                        TetTdp: getCellValue($cells, "Tet/TDP Needed"),
-                        Mmr: getCellValue($cells, "MMR Needed"),
-                        Varicella: getCellValue($cells, "Varicella Needed"),
-                        TaskForce: getCellValue($cells, "TaskForce"),
-                        Notes: getCellValue($cells, "Notes"),
-                        Over44: getCellValue($cells, "Over 44"),
-                        EventDate: getCellValue($cells, "EventDate"),
-                        EventEndDate: getCellValue($cells, "Event End Date"),
-                        EventId: getCellValue($cells, "EventID"),
-                        VisionWin: parseInt(getCellValue($cells, "Vision Win")),
-                        DentalWin: parseInt(getCellValue($cells, "Dental Win")),
-                        PhaWin: parseInt(getCellValue($cells, "PHA Win")),
-                        HivWin: parseInt(getCellValue($cells, "HIV Win")),
-                        HearingWin: parseInt(getCellValue($cells, "Hearing WIN")),
-                        Barcode: getCellValue($cells, "Barcode"),
-                        isDeleted: false
-                    };
-
-                    tableRows.push(row);
-                });
-
-                const eventId = document.getElementById('eventId').value;
-                // First, check if data exists for the given eventId
-                $.ajax({
-                    url: '@Url.Action("CheckForExistingDataAgainstEventId", "Home")',
-                    type: 'POST',
-                    data: JSON.stringify(eventId),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.success) {
-                            submitDataToDatabase(tableRows, eventId);
-                        } else {
-                            Swal.fire({
-                                title: 'Data Exists!',
-                                text: 'Data already exists for this Event ID. Do you want to overwrite it?',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: 'Yes, overwrite',
-                                cancelButtonText: 'No, cancel'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    submitDataToDatabase(tableRows, eventId);
-                                } else {
-                                    Swal.fire('Cancelled', 'No changes were made.', 'info');
-                                }
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error: " + error);
-                    },
-                    complete: function () {
-                        $('#loader').addClass('d-none');
-                    }
-                });
-            }
-
-            function submitDataToDatabase(tableRows, eventId) {
-                const dataToSend = JSON.stringify({
-                    Entities: tableRows,
-                    EventId: eventId
-                });
-                console.log(dataToSend);
-                $.ajax({
-                    url: '@Url.Action("SubmitDataInDatabase", "Home")',
-                    type: 'POST',
-                    data: dataToSend,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (response) {
-                        Swal.fire({
-                            title: response.success ? "Success!" : "Error!",
-                            text: response.message,
-                            icon: response.success ? "success" : "error",
-                            confirmButtonText: "OK"
-                        }).then(() => {
-                            if (response.success) {
-                                clearPreview();
-                            }
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Something went wrong: " + error,
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    },
-                    complete: function () {
-                        $('#loader').addClass('d-none');
                     }
                 });
             }
@@ -888,77 +614,5 @@
 
         </script>
     </div>
-    <style>
-        .btn-warning {
-            background-color: #ffc107;
-            border-color: #ffc107;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-
-
-        body {
-            background-color: rgba(80,90,201,0.1);
-        }
-
-        .form-control, .btn {
-            background-color: rgba(80,90,201,1); /* Theme color */
-            border-color: rgba(80,90,201,1);
-            color: white;
-        }
-
-        select.form-control, .event-input {
-            background-color: #fff;
-            border-color: #ced4da;
-            color: black;
-        }
-
-        .custom-select {
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            appearance: none; /* Remove default arrow */
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polygon points="0,4 8,12 16,4" style="fill:%23666;" /></svg>') no-repeat right 0.5em center; /* Custom arrow */
-            background-size: 1em;
-            width: 150px;
-        }
-
-        .custom-datetime {
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-
-
-
-
-
-
-
-
-
-        #parentContainer {
-            display: flex;
-            flex-direction: column; /* Stacks children vertically */
-        }
-
-        #taskforceInfoContainer,
-        #fileValidationErrorContainer {
-            width: 100%; /* Makes sure both containers take the full width */
-            clear: both; /* Clears any floated elements */
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/js/ScrubSheet.js"></script>

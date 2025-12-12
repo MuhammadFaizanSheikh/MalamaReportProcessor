@@ -1,11 +1,18 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <!-- Bootstrap CSS -->
-    @* <link href="~/css/bootstrap.min.css" rel="stylesheet" /> *@
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/css/flatpickr.min.css" rel="stylesheet" />
     <style>
         /* Custom styling for sidebar */
         body {
@@ -127,18 +134,32 @@
         <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2"></h1>
             <div>
-                <span class="text-muted">@User.Identity.Name</span>
+                <span class="text-muted"></span>
                 <!-- Alternatively, if you want to use a custom property from Identity, fetch the user data from UserManager -->
             </div>
         </div>
         <div class="content">
+            <script src="~/js/jquery-3.6.0.min.js"></script>
+            <script src="~/js/jquery.dataTables.min.js"></script>
+
+            <script src="~/js/select2.min.js"></script>
+            <script src="~/js/jquery-ui.min.js"></script>
+            <script src="~/js/jspdf.umd.min.js"></script>
             @RenderBody()
         </div>
     </main>
 
-    <!-- Bootstrap JS (optional) -->
-    @* <script src="~/js/bootstrap.bundle.min.js"></script> *@
-    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-yT/7My43t7gsv+FT6cD5SduB1C5GlM1DZhFT/43zBdvxZ2x1G3De0q4kb6b0bySVovh+9HpIrQDxjP9BxM1N4g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> *@
+    <script src="~/js/flatpickr.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dataTables.fixedColumns.min.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/js/xlsx.full.min.js"></script>
+    <script src="~/js/JsBarcode.all.min.js"></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.10/signalr.min.js"></script>
 
 </body>
 </html>
