@@ -336,7 +336,6 @@ $("#checkedOut").on("change", function () {
     toggleStatusSection();
 });
 
-
 function populateModalForEdit(data) {
     modalContent.empty(); // Clear previous content
     let textColor = 'style="color: black;"'; // Set text color to black
@@ -1910,6 +1909,8 @@ function addRow() {
     $('#editModal').modal('show');
 }
 
+
+
 function handleColumnsRelatedToDob(dob) {
     if (!dob) return; // Ensure DOB is provided
     let dobDate = new Date(dob);
@@ -2728,7 +2729,6 @@ function submitDataToDatabase(tableRows, eventId) {
     });
 }
 
-
 function clearPreview() {
     if ($.fn.DataTable.isDataTable('#previewTable')) {
         $('#previewTable').DataTable().clear().destroy(); // Clear data and destroy the instance
@@ -2751,8 +2751,9 @@ function clearPreview() {
         $('#excelFile').val('');
     }
 
-    document.getElementById('submitDataButton').classList.add('d-none');
+    //document.getElementById('submitDataButton').classList.add('d-none');
     /*document.getElementById('addRowButton').classList.add('d-none');*/
+    debugger;
     smIdCounter = 0;
     uploadCounter = 0;
 }
