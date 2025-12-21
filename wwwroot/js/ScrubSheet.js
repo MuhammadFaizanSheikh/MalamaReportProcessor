@@ -11,7 +11,7 @@ const keys = [
     "EventDate", "Event End Date", "EventID", "Vision Win", "Dental Win", "PHA Win", "HIV Win", "Hearing WIN", "Barcode",
     "Checked In", "Checked Out", "Checked In By",
     "Checked Out By", "Checked In Time", "Checked Out Time", "Walk-In Service Member",
-    "IMM Needed Status", "Labs Needed Status", "PHA Needed Status", "Audiologist Needed Status", "Vision Needed Status","Dental Needed Status"
+    "IMM Needed Status", "Labs Needed Status", "PHA Needed Status", "Audiologist Needed Status", "Vision Needed Status", "Dental Needed Status"
 ];
 
 const tableToKeysIndexMap = [
@@ -244,7 +244,7 @@ const calendarFields = ["DOB"];
 const multilineTextbox = ["Notes"];
 
 const lengthConstraints = {
-    "HIV Barcode": { min: 9}
+    "HIV Barcode": { min: 9 }
 };
 
 
@@ -336,11 +336,12 @@ $("#checkedOut").on("change", function () {
     toggleStatusSection();
 });
 
+
 function populateModalForEdit(data) {
     modalContent.empty(); // Clear previous content
     let textColor = 'style="color: black;"'; // Set text color to black
     const fieldsPerRow = 5; // Set to 5 fields per row now
-    
+
     for (const [categoryName, categoryKeys] of Object.entries(categories)) {
 
         if (categoryName === "Status") {
@@ -460,7 +461,7 @@ function populateModalForEdit(data) {
                                                             </div>`;
 
                             } else {
-                                let dateValue = isValidDate(value) ? formatDateToYYYYMMDD(value) : '';
+                                let dateValue = isValidDate(value) ? formatDateToYYYYMMDDGlobal(value) : '';
                                 inputHtml = `
                                                             <div class="form-group col-lg-2">
                                                                 <label>${key}</label>
@@ -510,7 +511,7 @@ function populateModalForEdit(data) {
                         </select>
                     </div>`;
                             } else {
-                                let dateValue = isValidDate(value) ? formatDateToYYYYMMDD(value) : '';
+                                let dateValue = isValidDate(value) ? formatDateToYYYYMMDDGlobal(value) : '';
                                 inputHtml = `
                     <div class="form-group col-lg-2">
                         <label>${key}</label>
@@ -552,7 +553,7 @@ function populateModalForEdit(data) {
                         `;
                 }
                 else if (calendarFields.includes(key)) {
-                    let dateValue = isValidDate(value) ? formatDateToYYYYMMDD(value) : '';
+                    let dateValue = isValidDate(value) ? formatDateToYYYYMMDDGlobal(value) : '';
                     inputHtml = `
                                     <div class="form-group col-lg-2">
                                         <label>${key}</label>
@@ -814,7 +815,7 @@ function populateModalForAdd(data) {
                         `;
                 }
                 else if (calendarFields.includes(key)) {
-                    let dateValue = isValidDate(value) ? formatDateToYYYYMMDD(value) : '';
+                    let dateValue = isValidDate(value) ? formatDateToYYYYMMDDGlobal(value) : '';
                     inputHtml = `
                                     <div class="form-group col-lg-2">
                                         <label>${key}</label>
@@ -1171,66 +1172,6 @@ $(document).on("input", ".decimal-input", function () {
     }
 });
 
-// function calculateAge(dob) {
-//     const birthDate = new Date(dob);
-//         const today = new Date(document.getElementById("calendarInput").value);
-//     let age = today.getFullYear() - birthDate.getFullYear();
-//     const monthDiff = today.getMonth() - birthDate.getMonth();
-
-//     // Adjust age if the birth month hasn't occurred yet this year
-//     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-//         age--;
-//     }
-
-//     return age;
-// }
-
-// function updateFieldsBasedOnAge(age) {
-
-//     const ageField = document.querySelector('input[name="AGE"]');
-//     if (ageField) {
-//         ageField.value = age; // Set the value of the AGE field to the calculated age
-//     }
-
-//     // Update "OVER 40" field
-//     const over40Field = document.querySelector('input[name="OVER 40"]');
-//     if (over40Field) {
-//         over40Field.value = age >= 40 ? "YES" : "NO";
-//     }
-
-//     // Update "OVER 44" field
-//     const over44Field = document.querySelector('input[name="Over 44"]');
-//     if (over44Field) {
-//         over44Field.value = age >= 44 ? "YES" : "NO";
-//     }
-
-//     // Update fields based on age > 39.5
-//     const lipidNeededField = document.querySelector('input[name="Lipid Needed"]');
-//     const lipidPanelField = document.querySelector('input[name="LIPID PANEL"]');
-//     const cholesterolField = document.querySelector('input[name="Cholesterol / HDL Cholesterol"]');
-//     const ekgField = document.querySelector('input[name="EKG"]');
-//     const ekgNeededField = document.querySelector('input[name="EKG NEEDED"]');
-
-//     const valueForAge = age > 39.5 ? "NEEDED" : "N/A";
-
-//     if (lipidNeededField) {
-//         lipidNeededField.value = valueForAge;
-//     }
-//     if (lipidPanelField) {
-//         lipidPanelField.value = valueForAge;
-//     }
-//     if (cholesterolField) {
-//         cholesterolField.value = valueForAge;
-//     }
-//     if (ekgField) {
-//         ekgField.value = valueForAge;
-//     }
-//     if (ekgNeededField) {
-//         ekgNeededField.value = valueForAge;
-//     }
-// }
-
-
 const validationRules = {
     "LAST NAME": { type: "alpha", allowSpecialCharacters: true, uppercase: true }, // Allow special characters in LAST NAME,
     "FIRST NAME": { type: "alpha", allowSpecialCharacters: true, uppercase: true }, // Allow special characters in FIRST NAME,
@@ -1360,19 +1301,6 @@ function isValidDate(dateString) {
         dateObj.getDate() === day;
 }
 
-function formatDateToYYYYMMDD(dateString) {
-    const [month, day, year] = dateString.split('/');
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-}
-
-function formatDateToMMDDYYYY(dateString) {
-    const [year, month, day] = dateString.split('-'); // Split the yyyy/mm/dd format
-    return `${month}/${day}/${year}`; // Return as mm/dd/yyyy
-}
-
-
-
-
 function AdjustWidth() {
     setTimeout(function () {
         $('#previewTable').DataTable().columns.adjust().draw();
@@ -1419,7 +1347,7 @@ async function saveChangesButton() {
         const value = $(this).val() || '';
 
         if (isDateField(key) && isValidDateOnSavingEditModal(value)) {
-            updatedData[key] = formatDateToMMDDYYYY(value);
+            updatedData[key] = formatDateToMMDDYYYYGlobal(value);
         } else {
             updatedData[key] = value;
         }
@@ -1442,7 +1370,7 @@ async function saveChangesButton() {
             hasError = true;
         }
 
-        
+
     });
 
     // If any required field is missing, do not proceed further
@@ -1519,7 +1447,7 @@ async function saveChangesButton() {
         const checkedInTimeIndex = keys.indexOf('Checked In Time');
 
         if ($('#checkedIn').val() === "Yes") {
-            fullRowData[checkedInTimeIndex] = formatDateTime24(new Date());
+            fullRowData[checkedInTimeIndex] = formatDateTimeToMMDDYYYY_HHMMSSGlobal(new Date());
         } else {
             fullRowData[checkedInTimeIndex] = "";
         }
@@ -1527,7 +1455,7 @@ async function saveChangesButton() {
         const checkedOutTimeIndex = keys.indexOf('Checked Out Time');
 
         if ($('#checkedOut').val() === "Yes") {
-            fullRowData[checkedOutTimeIndex] = formatDateTime24(new Date());
+            fullRowData[checkedOutTimeIndex] = formatDateTimeToMMDDYYYY_HHMMSSGlobal(new Date());
         } else {
             fullRowData[checkedOutTimeIndex] = "";
         }
@@ -1557,7 +1485,7 @@ async function saveChangesButton() {
             const result = await addSingleRecordInDatabase('/ExcelFileUploader/InsertSingleRecord', dtoObject);
 
             if (result.success) {
-                
+
 
                 Swal.fire({
                     icon: 'success',
@@ -1602,14 +1530,14 @@ async function saveChangesButton() {
         updatedData['Checked Out By'] = $('#checkedOutBy').val();
 
         if ($('#checkedIn').val() === "Yes") {
-            updatedData['Checked In Time'] = formatDateTime24(new Date());
+            updatedData['Checked In Time'] = formatDateTimeToMMDDYYYY_HHMMSSGlobal(new Date());
         }
         else {
             updatedData['Checked In Time'] = "";
         }
 
         if ($('#checkedOut').val() === "Yes") {
-            updatedData['Checked Out Time'] = formatDateTime24(new Date());
+            updatedData['Checked Out Time'] = formatDateTimeToMMDDYYYY_HHMMSSGlobal(new Date());
 
         }
         else {
@@ -1707,20 +1635,6 @@ async function printSpecificRowIfNeeded(shouldPrint, smIdToIdentifyRecordForPrin
             break; // stop looping after printing
         }
     }
-}
-
-function formatDateTime24(date) {
-    const pad = (num) => num.toString().padStart(2, '0');
-
-    const month = pad(date.getMonth() + 1);  // Months are zero-based
-    const day = pad(date.getDate());
-    const year = date.getFullYear();
-
-    const hours = pad(date.getHours());       // 24-hour format by default
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
-
-    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 function isDuplicateDodId(updatedData, isAddingNewRow, keys) {
@@ -1908,8 +1822,6 @@ function addRow() {
     document.getElementById("editModalLabel").innerText = "Add Walk-In Service Member";
     $('#editModal').modal('show');
 }
-
-
 
 function handleColumnsRelatedToDob(dob) {
     if (!dob) return; // Ensure DOB is provided
@@ -2729,6 +2641,7 @@ function submitDataToDatabase(tableRows, eventId) {
     });
 }
 
+
 function clearPreview() {
     if ($.fn.DataTable.isDataTable('#previewTable')) {
         $('#previewTable').DataTable().clear().destroy(); // Clear data and destroy the instance
@@ -2753,7 +2666,6 @@ function clearPreview() {
 
     //document.getElementById('submitDataButton').classList.add('d-none');
     /*document.getElementById('addRowButton').classList.add('d-none');*/
-    debugger;
     smIdCounter = 0;
     uploadCounter = 0;
 }
